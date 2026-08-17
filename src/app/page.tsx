@@ -40,11 +40,10 @@ function LanguageSwitcher() {
           id={`lang-${code}`}
           onClick={() => setLang(code)}
           aria-pressed={lang === code}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-200 ${
-            lang === code
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-200 ${lang === code
               ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm"
               : "text-zinc-500 hover:text-zinc-200"
-          }`}
+            }`}
         >
           <span>{flag}</span>
           <span>{label}</span>
@@ -76,11 +75,10 @@ function TabButton({
       id={`tab-${tab}`}
       role="tab"
       aria-selected={isActive}
-      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-base font-semibold transition-all duration-200 whitespace-nowrap ${
-        isActive
+      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-base font-semibold transition-all duration-200 whitespace-nowrap ${isActive
           ? "bg-amber-500/15 text-amber-300 border border-amber-500/40 shadow-lg shadow-amber-900/20"
           : "text-zinc-400 border border-transparent hover:text-zinc-200 hover:bg-zinc-800/60"
-      }`}
+        }`}
     >
       {icon}
       {label}
@@ -102,11 +100,10 @@ function TierPill({
   return (
     <button
       onClick={onClick}
-      className={`px-3 py-1 rounded-full text-sm font-bold border transition-all duration-150 ${
-        active
+      className={`px-3 py-1 rounded-full text-sm font-bold border transition-all duration-150 ${active
           ? "bg-amber-500/20 text-amber-300 border-amber-500/50"
           : "bg-zinc-800/60 text-zinc-500 border-zinc-700 hover:border-zinc-500 hover:text-zinc-300"
-      }`}
+        }`}
     >
       {tier}
     </button>
@@ -262,18 +259,16 @@ function InnerPage() {
               <button
                 id="tier-filter-toggle"
                 onClick={() => setFilterOpen((v) => !v)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-base font-semibold border transition-all duration-200 ${
-                  selectedTier !== "ALL"
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-base font-semibold border transition-all duration-200 ${selectedTier !== "ALL"
                     ? "bg-amber-500/15 text-amber-300 border-amber-500/40"
                     : "bg-zinc-900 border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200"
-                }`}
+                  }`}
               >
                 <Filter className="w-3.5 h-3.5" />
                 {t(UI.botList.tierLabel)}: {selectedTier}
                 <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    filterOpen ? "rotate-180" : ""
-                  }`}
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${filterOpen ? "rotate-180" : ""
+                    }`}
                 />
               </button>
             </div>
@@ -357,7 +352,7 @@ function InnerPage() {
             <span>{t(UI.footer.disclaimer)}</span>
           </div>
           <a
-            href="https://github.com"
+            href="https://github.com/tortor1011"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-600 hover:text-zinc-300 transition-colors"
