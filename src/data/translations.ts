@@ -50,7 +50,7 @@ export const UI = {
       th: "เอาชนะบอท AI ทุกตัว เข้าใจซินเนอร์จีของยูนิต และครองสนามรบด้วยคู่มือและข้อมูลที่ครบครัน",
     },
     statBots: { en: "AI Bot Profiles", th: "โปรไฟล์บอท AI" },
-    statUnits: { en: "Dragon Clan Units", th: "ยูนิตเผ่ามังกร" },
+    statUnits: { en: "Clan Units", th: "ยูนิต" },
     statGuides: { en: "Gameplay Guides", th: "คู่มือการเล่น" },
     statMatchups: { en: "Damage Matchups", th: "ตารางประสิทธิภาพ" },
   },
