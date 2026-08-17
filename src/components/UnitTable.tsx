@@ -284,7 +284,7 @@ function UnitCard({ unit }: { unit: UnitData }) {
         </div>
 
         <div className="p-4 flex flex-col gap-4">
-          {/* ── Training Path with 28px Building Badges ──────── */}
+          {/* ── Training Path (Temporarily disabled due to inaccuracies) ──
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-1.5">
               <Wrench className="w-3.5 h-3.5 text-zinc-500" />
@@ -295,7 +295,6 @@ function UnitCard({ unit }: { unit: UnitData }) {
             <div className="flex items-center flex-wrap gap-2">
               {unit.trainingPath.map((b, i) => (
                 <React.Fragment key={i}>
-                  {/* Building badge with 28px clear icon */}
                   <span className="flex items-center gap-2 text-sm font-semibold text-zinc-200 bg-zinc-800/90 border border-zinc-700 rounded-xl px-3 py-1.5 shadow-sm">
                     <BuildingIcon buildingNameEn={b.en} size={28} />
                     <span>{t(b)}</span>
@@ -307,6 +306,7 @@ function UnitCard({ unit }: { unit: UnitData }) {
               ))}
             </div>
           </div>
+          ── */}
 
           {/* ── Battle Gears with 36px Skill Icons ────────────── */}
           {unit.gears.length > 0 && (
@@ -345,11 +345,11 @@ function UnitCard({ unit }: { unit: UnitData }) {
                     </div>
 
                     {/* Effect description */}
-                    <p className="text-sm text-zinc-300 leading-relaxed mb-2.5">
+                    <p className="text-sm text-zinc-300 leading-relaxed">
                       {t(gear.effect)}
                     </p>
 
-                    {/* Requires row with 24px building icon */}
+                    {/* Requires / Train Location (Temporarily disabled due to inaccuracies) ──
                     <div className="flex items-center gap-2 pt-2 border-t border-amber-800/30">
                       <BuildingIcon buildingNameEn={gear.building.en} size={24} />
                       <span className="text-xs text-zinc-400">
@@ -359,6 +359,7 @@ function UnitCard({ unit }: { unit: UnitData }) {
                         </span>
                       </span>
                     </div>
+                    ── */}
                   </div>
                 ))}
               </div>
