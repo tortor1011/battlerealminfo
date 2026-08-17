@@ -26,10 +26,10 @@ function StatBar({ label, value }: { label: string; value: number }) {
   return (
     <div className="flex flex-col gap-1">
       <div className="flex justify-between items-center">
-        <span className="text-xs text-zinc-400 font-medium uppercase tracking-wide">
+        <span className="text-sm text-zinc-400 font-medium uppercase tracking-wide">
           {translatedLabel}
         </span>
-        <span className={`text-xs font-bold tabular-nums ${textColor}`}>{value}</span>
+        <span className={`text-sm font-bold tabular-nums ${textColor}`}>{value}</span>
       </div>
       <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
         <div
@@ -48,7 +48,7 @@ function TierBadge({ tier }: { tier: BotTier }) {
   const isSSS = tier === "SSS";
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black border ${classes} shadow-md ${
+      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-sm font-black border ${classes} shadow-md ${
         isSSS ? "animate-pulse" : ""
       }`}
     >
@@ -90,10 +90,10 @@ export default function BotCard({ bot }: BotCardProps) {
         {/* Header */}
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h3 className="text-lg font-bold text-zinc-100 tracking-tight leading-tight">
+            <h3 className="text-xl font-bold text-zinc-100 tracking-tight leading-tight">
               {bot.name}
             </h3>
-            <p className="text-xs text-zinc-500 mt-0.5 italic">{t(bot.tagline)}</p>
+            <p className="text-sm text-zinc-500 mt-0.5 italic">{t(bot.tagline)}</p>
           </div>
           <TierBadge tier={bot.tier} />
         </div>
@@ -101,7 +101,7 @@ export default function BotCard({ bot }: BotCardProps) {
         {/* Playstyle */}
         <div className="flex items-start gap-2 bg-zinc-800/60 rounded-xl px-3 py-2.5">
           <Sword className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-          <p className="text-xs text-zinc-300 leading-relaxed">{t(bot.playstyle)}</p>
+          <p className="text-sm text-zinc-300 leading-relaxed">{t(bot.playstyle)}</p>
         </div>
 
         {/* Stat Bars */}
@@ -116,13 +116,13 @@ export default function BotCard({ bot }: BotCardProps) {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-1 mb-0.5">
               <Zap className="w-3 h-3 text-emerald-400" />
-              <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">
+              <span className="text-sm font-semibold text-emerald-400 uppercase tracking-wider">
                 {t(UI.botCard.strengths)}
               </span>
             </div>
             <ul className="flex flex-col gap-0.5">
               {ta(bot.strengths).map((s) => (
-                <li key={s} className="text-[10px] text-zinc-400 pl-2 border-l border-emerald-700">
+                <li key={s} className="text-sm text-zinc-400 pl-2 border-l border-emerald-700">
                   {s}
                 </li>
               ))}
@@ -131,13 +131,13 @@ export default function BotCard({ bot }: BotCardProps) {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-1 mb-0.5">
               <Shield className="w-3 h-3 text-rose-400" />
-              <span className="text-[10px] font-semibold text-rose-400 uppercase tracking-wider">
+              <span className="text-sm font-semibold text-rose-400 uppercase tracking-wider">
                 {t(UI.botCard.weaknesses)}
               </span>
             </div>
             <ul className="flex flex-col gap-0.5">
               {ta(bot.weaknesses).map((w) => (
-                <li key={w} className="text-[10px] text-zinc-400 pl-2 border-l border-rose-800">
+                <li key={w} className="text-sm text-zinc-400 pl-2 border-l border-rose-800">
                   {w}
                 </li>
               ))}
@@ -153,7 +153,7 @@ export default function BotCard({ bot }: BotCardProps) {
         >
           <div className="flex items-center gap-2">
             <Lightbulb className="w-3.5 h-3.5 text-amber-400 group-hover/btn:text-amber-300" />
-            <span className="text-xs font-semibold text-amber-400 group-hover/btn:text-amber-300">
+            <span className="text-sm font-semibold text-amber-400 group-hover/btn:text-amber-300">
               {t(UI.botCard.howToCounter)}
             </span>
           </div>
@@ -170,8 +170,8 @@ export default function BotCard({ bot }: BotCardProps) {
             <ul className="flex flex-col gap-2">
               {ta(bot.counterTips).map((tip, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <span className="text-amber-500 font-bold text-xs mt-0.5 shrink-0">{i + 1}.</span>
-                  <span className="text-xs text-amber-200/80 leading-relaxed">{tip}</span>
+                  <span className="text-amber-500 font-bold text-sm mt-0.5 shrink-0">{i + 1}.</span>
+                  <span className="text-sm text-amber-200/80 leading-relaxed">{tip}</span>
                 </li>
               ))}
             </ul>

@@ -470,39 +470,608 @@ export const TIER_COLOR: Record<BotTier, string> = {
   D: "text-rose-300 border-rose-400 bg-rose-400/10 shadow-rose-400/20",
 };
 
-// ─── UNITS & CLANS ───────────────────────────────────────────
+// ─── UNITS & CLANS DATA DEFINITIONS ─────────────────────────
 
 export type DamageType = "Cutting" | "Piercing" | "Blunt" | "Magic" | "Fire" | "Explosive";
 export type ArmorType = "Unarmored" | "Light" | "Medium" | "Heavy" | "Building" | "Horse";
 
 export interface BattleGear {
-  name: string;
-  buildingRequired: string;
-  description: L10n;
-  type: "Offensive" | "Defensive" | "Support";
+  name: { en: string; th: string };
+  building: { en: string; th: string };
+  type: "Offensive" | "Defensive" | "Utility";
+  effect: { en: string; th: string };
 }
 
-export interface UnitEntry {
+export interface UnitData {
   id: string;
-  name: string;
+  name: { en: string; th: string };
   tier: string;
-  role: L10n;
-  trainingBuildings: string[];
-  damageType: DamageType;
-  armorType: ArmorType;
-  battleGears: BattleGear[];
-  notes: L10n;
-  isAntiCavalry?: boolean;
-  isHealer?: boolean;
+  role: { en: string; th: string };
+  clan: "Dragon" | "Serpent" | "Lotus" | "Wolf";
+  dmgType: "Cutting" | "Piercing" | "Blunt" | "Magic" | "Fire" | "Explosive";
+  armorType: "Unarmored" | "Light" | "Medium" | "Heavy" | "Building" | "Horse";
+  trainingPath: { en: string; th: string }[];
+  gears: BattleGear[];
+  description: { en: string; th: string };
 }
 
 export interface ClanData {
-  id: string;
+  id: "dragon" | "serpent" | "lotus" | "wolf";
   name: string;
   lore: L10n;
   color: string;
-  units: UnitEntry[];
+  units: UnitData[];
 }
+
+// ─── COMPLETE ALL 4 CLANS UNITS DATASET ───────────────────────
+
+export const ALL_UNITS_DATA: UnitData[] = [
+  // ==================== DRAGON CLAN ====================
+  {
+    id: "dragon_spearman",
+    name: { en: "Spearman", th: "พลหอก (Spearman)" },
+    tier: "Tier 1 Melee",
+    role: { en: "Anti-Cavalry Specialist", th: "ผู้เชี่ยวชาญการต่อต้านม้า" },
+    clan: "Dragon",
+    dmgType: "Piercing",
+    armorType: "Light",
+    trainingPath: [{ en: "Dojo", th: "โรงดาบ (Dojo)" }],
+    gears: [
+      {
+        name: { en: "Stun Thrust", th: "แทงสกัดมึนงง" },
+        building: { en: "Dragon Shrine", th: "Dragon Shrine" },
+        type: "Offensive",
+        effect: {
+          en: "Strikes enemies with a powerful thrust, stunning them briefly.",
+          th: "แทงกระแทกศัตรูอย่างรุนแรง ทำให้เป้าหมายติดสถานะมึนงง",
+        },
+      },
+    ],
+    description: {
+      en: "Primary counter to cavalry units. Deals high piercing damage against horses.",
+      th: "ตัวเคาน์เตอร์ทหารม้าหลัก สร้างความเสียหายทะลวงเกราะใส่ยูนิตขี่ม้าอย่างรุนแรง",
+    },
+  },
+  {
+    id: "dragon_archer",
+    name: { en: "Archer", th: "พลธนู (Archer)" },
+    tier: "Tier 1 Ranged",
+    role: { en: "Ranged Harasser / Scout", th: "ยิงสกัดระยะไกล / สอดแนม" },
+    clan: "Dragon",
+    dmgType: "Piercing",
+    armorType: "Unarmored",
+    trainingPath: [{ en: "Target Range", th: "ลานยิงธนู (Target Range)" }],
+    gears: [
+      {
+        name: { en: "Fire Arrow", th: "ธนูเพลิง" },
+        building: { en: "Fireworks Factory", th: "Fireworks Factory" },
+        type: "Offensive",
+        effect: {
+          en: "Ignites targets and deals continuous Fire damage, highly effective against buildings.",
+          th: "ยิงลูกศรไฟเผาเป้าหมายและสร้างความเสียหายไฟต่อเนื่อง พังตึกได้เร็ว",
+        },
+      },
+      {
+        name: { en: "Zen Arrow", th: "ลูกศรส่องสว่าง" },
+        building: { en: "Dragon Shrine", th: "Dragon Shrine" },
+        type: "Utility",
+        effect: {
+          en: "Fires an arrow high into the sky to reveal a huge area of fog of war.",
+          th: "ยิงลูกศรขึ้นฟ้าเพื่อเปิดหมอกส่องแผนที่ระยะไกล",
+        },
+      },
+    ],
+    description: {
+      en: "Fast and versatile ranged unit. Strong on elevated cliffs or watchtowers.",
+      th: "ยูนิตยิงไกลที่มีความคล่องตัวสูง ได้เปรียบมากเมื่อยืนบนหน้าผาหรือหอคอย",
+    },
+  },
+  {
+    id: "dragon_warrior",
+    name: { en: "Dragon Warrior", th: "นักรบมังกร (Dragon Warrior)" },
+    tier: "Tier 2 Melee",
+    role: { en: "Versatile Brawler", th: "นักสู้แนวหน้าสารพัดประโยชน์" },
+    clan: "Dragon",
+    dmgType: "Cutting",
+    armorType: "Medium",
+    trainingPath: [
+      { en: "Dojo", th: "โรงดาบ (Dojo)" },
+      { en: "Target Range", th: "ลานยิงธนู (Target Range)" },
+    ],
+    gears: [
+      {
+        name: { en: "Ki Shield", th: "โล่พลังปราณ" },
+        building: { en: "Dragon Shrine", th: "Dragon Shrine" },
+        type: "Defensive",
+        effect: {
+          en: "Creates a barrier that deflects incoming ranged projectiles.",
+          th: "กางม่านพลังป้องกันการโจมตีระยะไกลชั่วขณะ",
+        },
+      },
+      {
+        name: { en: "Chi Wave", th: "คลื่นพลังกระแทก" },
+        building: { en: "Fireworks Factory", th: "Fireworks Factory" },
+        type: "Offensive",
+        effect: {
+          en: "Unleashes a shockwave that knocks surrounding infantry to the ground.",
+          th: "ปล่อยคลื่นพลังกระแทกศัตรูรอบตัวให้ล้มลง",
+        },
+      },
+    ],
+    description: {
+      en: "Core mid-game combatant capable of closing the distance and disrupting enemy formations.",
+      th: "ยูนิตหลักช่วงกลางเกม พุ่งเข้าชนเปิดจังหวะและทำลายแนวรบศัตรูได้ดี",
+    },
+  },
+  {
+    id: "dragon_samurai",
+    name: { en: "Samurai", th: "ซามูไร (Samurai)" },
+    tier: "Tier 3 Melee",
+    role: { en: "Elite Frontliner & Finisher", th: "นักรบยอดฝีมือแถวหน้า" },
+    clan: "Dragon",
+    dmgType: "Cutting",
+    armorType: "Heavy",
+    trainingPath: [
+      { en: "Dojo", th: "Dojo" },
+      { en: "Target Range", th: "Target Range" },
+      { en: "Fireworks Factory", th: "Fireworks Factory" },
+    ],
+    gears: [
+      {
+        name: { en: "Dragon Skin", th: "ผิวมังกรทอง" },
+        building: { en: "Dragon Shrine", th: "Dragon Shrine" },
+        type: "Defensive",
+        effect: {
+          en: "Dramatically reduces all incoming damage for a limited time.",
+          th: "ลดความเสียหายทุกชนิดที่ได้รับลงอย่างมหาศาลชั่วขณะ",
+        },
+      },
+      {
+        name: { en: "Dragon's Breath", th: "ลมหายใจมังกร" },
+        building: { en: "Fireworks Factory", th: "Fireworks Factory" },
+        type: "Offensive",
+        effect: {
+          en: "Breathes a devastating cone of fire that scorches clusters of enemies and structures.",
+          th: "พ่นเปลวเพลิงรูปกรวยด้านหน้า เผาผลาญศัตรูกลุ่มใหญ่และสิ่งก่อสร้าง",
+        },
+      },
+    ],
+    description: {
+      en: "The pinnacle of Dragon military power. Sacrifices itself to empower nearby allies upon death.",
+      th: "ขุมกำลังสูงสุดของ Dragon ฟันรุนแรง และเมื่อตายจะมอบบัฟขวัญกำลังใจให้กองทัพ",
+    },
+  },
+  {
+    id: "dragon_geisha",
+    name: { en: "Geisha", th: "เกอิชา (Geisha)" },
+    tier: "Support",
+    role: { en: "Healer", th: "ยูนิตฟื้นฟูพลังชีวิต" },
+    clan: "Dragon",
+    dmgType: "Magic",
+    armorType: "Unarmored",
+    trainingPath: [{ en: "Bathhouse", th: "โรงอาบน้ำ (Bathhouse)" }],
+    gears: [],
+    description: {
+      en: "Essential support unit that sustains combatants and accelerates Yang point generation through prolonged battles.",
+      th: "ยูนิตสนับสนุนที่ขาดไม่ได้ คอยเติมเลือดรักษาทหารและช่วยเร่งการฟาร์มแต้ม Yang",
+    },
+  },
+
+  // ==================== SERPENT CLAN ====================
+  {
+    id: "serpent_swordsman",
+    name: { en: "Swordsman", th: "นักดาบ (Swordsman)" },
+    tier: "Tier 1 Melee",
+    role: { en: "Light Infantry", th: "พลดาบจู่โจมเร็ว" },
+    clan: "Serpent",
+    dmgType: "Cutting",
+    armorType: "Light",
+    trainingPath: [{ en: "Tavern", th: "โรงเหล้า (Tavern)" }],
+    gears: [
+      {
+        name: { en: "Mugging", th: "ปล้นสะดม" },
+        building: { en: "Thieves Guild", th: "Thieves Guild" },
+        type: "Utility",
+        effect: {
+          en: "Steals rice or water directly from enemy peasants upon striking them.",
+          th: "ฟันแย่งชิงข้าวหรือน้ำจากชาวบ้านศัตรูทันทีเมื่อโจมตี",
+        },
+      },
+      {
+        name: { en: "Glass Sword", th: "ดาบแก้วพิฆาต" },
+        building: { en: "Metalworks", th: "Metalworks" },
+        type: "Offensive",
+        effect: {
+          en: "Deals massive instant damage on the next strike but damages the sword.",
+          th: "ปลดปล่อยดาเมจฟันมหาศาลในการโจมตีครั้งเดียว",
+        },
+      },
+    ],
+    description: {
+      en: "Cheap and fast frontline raider capable of stealing enemy resources early on.",
+      th: "ทหารราบราคาถูก คล่องตัว และสามารถตัดทอนเศรษฐกิจศัตรูได้ตั้งแต่ต้นเกม",
+    },
+  },
+  {
+    id: "serpent_crossbowman",
+    name: { en: "Crossbowman", th: "พลหน้าไม้ (Crossbowman)" },
+    tier: "Tier 1 Ranged",
+    role: { en: "Heavy Ranged Piercer", th: "พลยิงระยะไกลเจาะเกราะ" },
+    clan: "Serpent",
+    dmgType: "Piercing",
+    armorType: "Light",
+    trainingPath: [{ en: "Sharpshooter Guild", th: "Sharpshooter Guild" }],
+    gears: [
+      {
+        name: { en: "Phosphorus Bolts", th: "ลูกดอกฟอสฟอรัส" },
+        building: { en: "Alchemist Hut", th: "Alchemist Hut" },
+        type: "Offensive",
+        effect: {
+          en: "Shoots fiery bolts that ignite targets and deal damage over time.",
+          th: "ยิงลูกดอกอาบสารเคมีติดไฟ เผาไหม้เป้าหมายต่อเนื่อง",
+        },
+      },
+    ],
+    description: {
+      en: "Heavy ranged damage dealer with higher penetration than standard archers.",
+      th: "พลยิงระยะไกลที่มีพลังทำลายทะลวงเกราะสูงกว่าพลธนูทั่วไป",
+    },
+  },
+  {
+    id: "serpent_raider",
+    name: { en: "Raider", th: "เรดเดอร์ (Raider)" },
+    tier: "Tier 2 Siege/Melee",
+    role: { en: "Base Destroyer / Arsonist", th: "ตัวลอบเผาทำลายฐาน" },
+    clan: "Serpent",
+    dmgType: "Fire",
+    armorType: "Medium",
+    trainingPath: [
+      { en: "Tavern", th: "Tavern" },
+      { en: "Thieves Guild", th: "Thieves Guild" },
+    ],
+    gears: [
+      {
+        name: { en: "Brush Fire", th: "ไฟลามทุ่ง" },
+        building: { en: "Alchemist Hut", th: "Alchemist Hut" },
+        type: "Offensive",
+        effect: {
+          en: "Ignites surrounding terrain, burning down buildings and rice fields rapidly.",
+          th: "จุดไฟเผาพื้นที่โดยรอบ เผาแปลงข้าวและสิ่งก่อสร้างอย่างรวดเร็ว",
+        },
+      },
+    ],
+    description: {
+      en: "The infamous building burner of Serpent Clan. Terrifying when sent to raid enemy rice paddies.",
+      th: "ราชาแห่งการเผาทำลาย วิ่งลอบเข้าไปจุดไฟเผาแปลงข้าวและทำลายฐานศัตรูได้ไวมาก",
+    },
+  },
+  {
+    id: "serpent_ronin",
+    name: { en: "Ronin", th: "โรนิน (Ronin)" },
+    tier: "Tier 3 Melee",
+    role: { en: "Dual-Katana Duelist", th: "จอมดาบคู่สังหาร" },
+    clan: "Serpent",
+    dmgType: "Cutting",
+    armorType: "Heavy",
+    trainingPath: [
+      { en: "Tavern", th: "Tavern" },
+      { en: "Sharpshooter Guild", th: "Sharpshooter Guild" },
+      { en: "Alchemist Hut", th: "Alchemist Hut" },
+    ],
+    gears: [
+      {
+        name: { en: "Yin Blade", th: "ดาบมารหยิน (ดูดเลือด)" },
+        building: { en: "Alchemist Hut", th: "Alchemist Hut" },
+        type: "Offensive",
+        effect: {
+          en: "Empowers attacks with life-drain, restoring HP with every successful strike.",
+          th: "เปลี่ยนการฟันเป็นการดูดเลือด ฟื้นฟู HP ทุกครั้งที่โจมตี",
+        },
+      },
+      {
+        name: { en: "Blood Bond", th: "พันธนาการโลหิต" },
+        building: { en: "Necromancer Throne", th: "Necromancer Throne" },
+        type: "Utility",
+        effect: {
+          en: "Transfers damage taken to nearby friendly peasants instead.",
+          th: "ถ่ายโอนความเสียหายที่ได้รับไปให้ชาวบ้านรอบข้างแทน",
+        },
+      },
+    ],
+    description: {
+      en: "Brutal dual-blade master. Yin Blade allows them to sustain long fights without needing dedicated healers.",
+      th: "นักดาบคู่สุดโหด ดาบ Yin Blade ทำให้ยืนฟันแลกและรีเลือดตัวเองได้โดยไม่ต้องพึ่งพาตัวฮีล",
+    },
+  },
+
+  // ==================== LOTUS CLAN ====================
+  {
+    id: "lotus_blade_acolyte",
+    name: { en: "Blade Acolyte", th: "สาวกดาบ (Blade Acolyte)" },
+    tier: "Tier 1 Melee",
+    role: { en: "Mobile Infantry", th: "ทหารราบเพลงดาบควง" },
+    clan: "Lotus",
+    dmgType: "Cutting",
+    armorType: "Light",
+    trainingPath: [{ en: "Blade Garden", th: "Blade Garden" }],
+    gears: [
+      {
+        name: { en: "Inner Light", th: "จิตวิญญาณส่องสว่าง" },
+        building: { en: "Warlock Tower", th: "Warlock Tower" },
+        type: "Utility",
+        effect: {
+          en: "Sacrifices self to provide massive stamina recharge to nearby allies.",
+          th: "สละชีพเพื่อฟื้นฟูสตามิน่าให้เพื่อนร่วมทีมรอบตัวอย่างรวดเร็ว",
+        },
+      },
+    ],
+    description: {
+      en: "Fast blade fighter capable of evolving into devastating staff and magic wielders.",
+      th: "นักดาบพื้นฐานที่ว่องไว สามารถฝึกฝนต่อยอดไปเป็นสายเวทมนตร์ขั้นสูงได้",
+    },
+  },
+  {
+    id: "lotus_staff_adept",
+    name: { en: "Staff Adept", th: "ผู้ใช้พลอง (Staff Adept)" },
+    tier: "Tier 1 Melee / Disruptor",
+    role: { en: "Spinning Crowd Controller", th: "ตัวป่วนหมุนพลองสกัด" },
+    clan: "Lotus",
+    dmgType: "Blunt",
+    armorType: "Light",
+    trainingPath: [{ en: "Training Yard", th: "Training Yard" }],
+    gears: [
+      {
+        name: { en: "Whirling Dervish", th: "พายุหมุนพลอง" },
+        building: { en: "Blade Garden", th: "Blade Garden" },
+        type: "Offensive",
+        effect: {
+          en: "Spins staff rapidly, damaging all adjacent enemies and deflecting arrows.",
+          th: "ควงพลองเป็นพายุหมุน สร้างความเสียหายรอบตัวและปัดป้องลูกธนู",
+        },
+      },
+    ],
+    description: {
+      en: "Excellent defensive unit against mass light infantry and archers.",
+      th: "เก่งมากในการรับมือฝูงทหารราบขนาดเล็กและปัดป้องกระสุนระยะไกล",
+    },
+  },
+  {
+    id: "lotus_unclean_one",
+    name: { en: "Unclean One", th: "ผู้แปดเปื้อน (Unclean One)" },
+    tier: "Tier 2 Ranged / Siege",
+    role: { en: "Corrosive Artillery", th: "จอมพ่นเมือกกัดกร่อน" },
+    clan: "Lotus",
+    dmgType: "Magic",
+    armorType: "Medium",
+    trainingPath: [
+      { en: "Training Yard", th: "Training Yard" },
+      { en: "Blade Garden", th: "Blade Garden" },
+    ],
+    gears: [
+      {
+        name: { en: "Death Siphon", th: "สูบพลังชีวิต" },
+        building: { en: "Warlock Tower", th: "Warlock Tower" },
+        type: "Offensive",
+        effect: {
+          en: "Drains health from target unit over time from long range.",
+          th: "ดูดกลืนพลังชีวิตของศัตรูจากระยะไกลอย่างต่อเนื่อง",
+        },
+      },
+    ],
+    description: {
+      en: "Spits corrosive sludge over long distances. Melts heavy armor and fortifications.",
+      th: "พ่นเมือกพิษกรดระยะไกล ละลายเกราะหนักและสิ่งก่อสร้างได้อย่างรวดเร็ว",
+    },
+  },
+  {
+    id: "lotus_warlock",
+    name: { en: "Warlock / Master Warlock", th: "วอร์ล็อค (Warlock)" },
+    tier: "Tier 3 Magic AoE",
+    role: { en: "Devastating Spellcaster", th: "จอมเวททำลายล้างวงกว้าง" },
+    clan: "Lotus",
+    dmgType: "Magic",
+    armorType: "Heavy",
+    trainingPath: [
+      { en: "Blade Garden", th: "Blade Garden" },
+      { en: "Training Yard", th: "Training Yard" },
+      { en: "Warlock Tower", th: "Warlock Tower" },
+    ],
+    gears: [
+      {
+        name: { en: "Soul Chill", th: "เยือกแข็งสะกดวิญญาณ" },
+        building: { en: "Warlock Tower", th: "Warlock Tower" },
+        type: "Offensive",
+        effect: {
+          en: "Freezes groups of enemy units in place, rendering them completely helpless.",
+          th: "แช่แข็งศัตรูทั้งกลุ่ม ขยับและโจมตีไม่ได้ชั่วขณะ",
+        },
+      },
+    ],
+    description: {
+      en: "The most feared caster in the game. Soul Chill combined with high magic AoE can wipe entire armies in seconds.",
+      th: "จอมเวทที่น่ากลัวที่สุดในเกม มีสกิลแช่แข็งหมู่และดาเมจเวทที่สามารถกวาดล้างกองทัพได้ในพริบตา",
+    },
+  },
+
+  // ==================== WOLF CLAN ====================
+  {
+    id: "wolf_brawler",
+    name: { en: "Brawler", th: "นักชกสนับมือ (Brawler)" },
+    tier: "Tier 1 Melee",
+    role: { en: "Frontline Bruiser", th: "นักสู้หมัดหนัก" },
+    clan: "Wolf",
+    dmgType: "Blunt",
+    armorType: "Medium",
+    trainingPath: [{ en: "Combat Pit", th: "Combat Pit" }],
+    gears: [
+      {
+        name: { en: "Zen Focus", th: "เพ่งสมาธิเหล็กกล้า" },
+        building: { en: "Wolf Den", th: "Wolf Den" },
+        type: "Defensive",
+        effect: {
+          en: "Increases armor and stamina regeneration when surrounded.",
+          th: "เพิ่มเกราะและอัตราฟื้นฟูสตามิน่าเมื่อตกอยู่ในวงล้อมศัตรู",
+        },
+      },
+    ],
+    description: {
+      en: "Tough, high-health basic brawler that excels at absorbing damage.",
+      th: "ทหารราบพื้นฐานที่พลังชีวิตสูง ถึกทน และทำดาเมจทุบได้หนักหน่วง",
+    },
+  },
+  {
+    id: "wolf_hurler",
+    name: { en: "Hurler", th: "นักขว้างหิน (Hurler)" },
+    tier: "Tier 1 Ranged / Siege",
+    role: { en: "Long-Range Boulder Slinger", th: "นักขว้างหินทุบป้อม" },
+    clan: "Wolf",
+    dmgType: "Blunt",
+    armorType: "Light",
+    trainingPath: [{ en: "Ballistics Den", th: "Ballistics Den" }],
+    gears: [
+      {
+        name: { en: "Lava Rocks", th: "หินลาวาเพลิง" },
+        building: { en: "Wolf Den", th: "Wolf Den" },
+        type: "Offensive",
+        effect: {
+          en: "Hurls molten magma rocks that set enemy buildings on fire.",
+          th: "ขว้างหินลาวาหลอมเหลวที่ติดไฟและเผาทำลายสิ่งก่อสร้าง",
+        },
+      },
+    ],
+    description: {
+      en: "Effective early siege thrower. Hurls heavy rocks to shatter enemy defensive lines.",
+      th: "ยูนิตขว้างหินระยะไกล ทำลายสิ่งก่อสร้างและทุบแถวหน้าของศัตรูได้อย่างมีประสิทธิภาพ",
+    },
+  },
+  {
+    id: "wolf_mauler",
+    name: { en: "Mauler", th: "มอลเลอร์ค้อนยักษ์ (Mauler)" },
+    tier: "Tier 2 Heavy Melee",
+    role: { en: "Building Smasher / Heavy Tank", th: "จอมทุบทำลายฐาน & แทงก์หนัก" },
+    clan: "Wolf",
+    dmgType: "Blunt",
+    armorType: "Heavy",
+    trainingPath: [
+      { en: "Combat Pit", th: "Combat Pit" },
+      { en: "Ballistics Den", th: "Ballistics Den" },
+    ],
+    gears: [
+      {
+        name: { en: "Wrecking Ball", th: "หมุนค้อนถล่มทลาย" },
+        building: { en: "Combat Pit", th: "Combat Pit" },
+        type: "Offensive",
+        effect: {
+          en: "Swings giant ball & chain in a circle, knocking back all surrounding enemies.",
+          th: "เหวี่ยงลูกตุ้มยักษ์รอบตัว กระแทกศัตรูให้กระเด็นถอยหลัง",
+        },
+      },
+    ],
+    description: {
+      en: "Demolishes enemy structures in seconds and scatters infantry lines with blunt force.",
+      th: "ทุบสิ่งก่อสร้างพังในไม่กี่วินาที และมีพลังเหวี่ยงพัดแนวรบศัตรูให้กระเจิง",
+    },
+  },
+  {
+    id: "wolf_berserker",
+    name: { en: "Berserker", th: "เบอร์เซิร์กเกอร์ (Berserker)" },
+    tier: "Tier 3 Elite Melee",
+    role: { en: "Relentless Greatsword Juggernaut", th: "นักรบคลั่งดาบยักษ์" },
+    clan: "Wolf",
+    dmgType: "Cutting",
+    armorType: "Heavy",
+    trainingPath: [
+      { en: "Combat Pit", th: "Combat Pit" },
+      { en: "Ballistics Den", th: "Ballistics Den" },
+      { en: "Wolf Den", th: "Wolf Den" },
+    ],
+    gears: [
+      {
+        name: { en: "Lycanthropy / Blood Lust", th: "ความบ้าคลั่งโลหิต" },
+        building: { en: "Wolf Den", th: "Wolf Den" },
+        type: "Offensive",
+        effect: {
+          en: "Massively boosts movement and attack speed at the cost of defense.",
+          th: "เร่งความเร็วการวิ่งและการฟันอย่างมหาศาลเพื่อบดขยี้เป้าหมาย",
+        },
+      },
+    ],
+    description: {
+      en: "The ultimate brute force of the Wolf Clan. Massive health pool and high sustained slicing damage.",
+      th: "สุดยอดนักรบพลังกล้ามของ Wolf Clan เลือดเยอะมาก และฟันทำลายแถวหน้าได้อย่างเด็ดขาด",
+    },
+  },
+  {
+    id: "wolf_druidess",
+    name: { en: "Druidess", th: "ดรูอิดเดส (Druidess)" },
+    tier: "Support / Control",
+    role: { en: "Rooter & Summoner", th: "จอมสะกดรากไม้ & เรียกหมาป่า" },
+    clan: "Wolf",
+    dmgType: "Magic",
+    armorType: "Unarmored",
+    trainingPath: [{ en: "Cairn", th: "Cairn" }],
+    gears: [
+      {
+        name: { en: "Entangle Roots", th: "รากไม้มัดตรึง" },
+        building: { en: "Wolf Den", th: "Wolf Den" },
+        type: "Offensive",
+        effect: {
+          en: "Summons vines from the earth to immobilize target enemies.",
+          th: "เสกรากไม้จากพื้นดินเพื่อตรึงเป้าหมายให้อยู่กับที่",
+        },
+      },
+    ],
+    description: {
+      en: "Primary caster of the Wolf clan. Roots fast cavalry in place so Maulers and Berserkers can catch them.",
+      th: "ตัวซัพพอร์ตหลักของ Wolf มีสกิลตรึงขาหยุดทหารม้าเพื่อให้ตัวชนตามเข้าไปทุบได้ทัน",
+    },
+  },
+];
+
+// ─── CLAN DATA WITH POPULATED UNITS ───────────────────────────
+
+export const CLAN_DATA: ClanData[] = [
+  {
+    id: "dragon",
+    name: "Dragon Clan",
+    lore: {
+      en: "Masters of fire and discipline. The Dragon Clan blends precision swordsmanship with devastating alchemical warfare, making them formidable at every tech tier.",
+      th: "ผู้เชี่ยวชาญเพลิงและวินัย เผ่ามังกรผสมผสานการต่อสู้ด้วยดาบที่แม่นยำกับสงครามเคมีที่น่าสะพรึง ทำให้พวกเขาน่าเกรงขามในทุกระดับเทคโนโลยี",
+    },
+    color: "from-red-900/60 to-orange-900/40 border-red-700/50",
+    units: ALL_UNITS_DATA.filter((u) => u.clan === "Dragon"),
+  },
+  {
+    id: "serpent",
+    name: "Serpent Clan",
+    lore: {
+      en: "Children of shadow and venom. Serpent Clan masters guerrilla tactics, poison, and cunning ambushes from the darkness.",
+      th: "ลูกหลานแห่งเงาและพิษ เผ่างูใหญ่เชี่ยวชาญยุทธวิธีกองโจร พิษ และการดักโจมตีจากความมืด",
+    },
+    color: "from-green-900/60 to-teal-900/40 border-green-700/50",
+    units: ALL_UNITS_DATA.filter((u) => u.clan === "Serpent"),
+  },
+  {
+    id: "lotus",
+    name: "Lotus Clan",
+    lore: {
+      en: "Weavers of death and rice-paddy alchemy. The Lotus Clan wields undead minions and powerful magic to overwhelm foes with sheer attrition.",
+      th: "นักปั้นความตายและเล่นแร่แปรธาตุในนาข้าว เผ่าดอกบัวควบคุมลูกสมุนผีดิบและเวทมนตร์อันทรงพลังเพื่อเอาชนะศัตรูด้วยการบั่นทอน",
+    },
+    color: "from-purple-900/60 to-violet-900/40 border-purple-700/50",
+    units: ALL_UNITS_DATA.filter((u) => u.clan === "Lotus"),
+  },
+  {
+    id: "wolf",
+    name: "Wolf Clan",
+    lore: {
+      en: "Savage warriors born from the wilderness. Wolf Clan units are cheap, fast, and feral — punishing enemies who dare to overextend.",
+      th: "นักรบดุร้ายที่เกิดจากป่าดงดิบ ยูนิตของเผ่าหมาป่าราคาถูก เร็ว และโหดเหี้ยม — ลงโทษศัตรูที่กล้าขยายแนวรบมากเกินไป",
+    },
+    color: "from-blue-900/60 to-slate-900/40 border-blue-700/50",
+    units: ALL_UNITS_DATA.filter((u) => u.clan === "Wolf"),
+  },
+];
 
 // Damage vs Armor effectiveness multipliers
 export const DAMAGE_MATCHUP: Record<DamageType, Partial<Record<ArmorType, number>>> = {
@@ -516,175 +1085,6 @@ export const DAMAGE_MATCHUP: Record<DamageType, Partial<Record<ArmorType, number
 
 export const ARMOR_TYPES: ArmorType[] = ["Unarmored", "Light", "Medium", "Heavy", "Building", "Horse"];
 export const DAMAGE_TYPES: DamageType[] = ["Cutting", "Piercing", "Blunt", "Magic", "Fire", "Explosive"];
-
-export const CLAN_DATA: ClanData[] = [
-  {
-    id: "dragon",
-    name: "Dragon Clan",
-    lore: {
-      en: "Masters of fire and discipline. The Dragon Clan blends precision swordsmanship with devastating alchemical warfare, making them formidable at every tech tier.",
-      th: "ผู้เชี่ยวชาญเพลิงและวินัย เผ่ามังกรผสมผสานการต่อสู้ด้วยดาบที่แม่นยำกับสงครามเคมีที่น่าสะพรึง ทำให้พวกเขาน่าเกรงขามในทุกระดับเทคโนโลยี",
-    },
-    color: "from-red-900/60 to-orange-900/40 border-red-700/50",
-    units: [
-      {
-        id: "samurai",
-        name: "Samurai",
-        tier: "Tier 3 Melee",
-        role: { en: "Elite Frontliner", th: "นักรบชั้นยอดแนวหน้า" },
-        trainingBuildings: ["Dojo", "Target Range", "Fireworks Factory"],
-        damageType: "Cutting",
-        armorType: "Heavy",
-        battleGears: [
-          {
-            name: "Dragon Skin",
-            buildingRequired: "Dragon Shrine",
-            description: {
-              en: "Activates a hardened skin buff that dramatically reduces incoming damage for a short duration.",
-              th: "เปิดใช้งานผิวหนังแข็งที่ลดความเสียหายที่รับได้อย่างมากเป็นระยะเวลาสั้น ๆ",
-            },
-            type: "Defensive",
-          },
-          {
-            name: "Dragon's Breath",
-            buildingRequired: "Fireworks Factory",
-            description: {
-              en: "Unleashes a devastating AoE fire cone in front of the Samurai, burning all enemies in the path.",
-              th: "ปลดปล่อยเปลวไฟ AoE รูปกรวยด้านหน้า Samurai เผาไหม้ศัตรูทุกตัวในเส้นทาง",
-            },
-            type: "Offensive",
-          },
-        ],
-        notes: {
-          en: "The backbone of Dragon Clan mid-to-late game. Requires the full Dojo → Target Range → Fireworks Factory chain. Use Dragon Skin before engaging heavy cavalry blobs.",
-          th: "กระดูกสันหลังของกลางถึงปลายเกมเผ่ามังกร ต้องการสาย Dojo → Target Range → Fireworks Factory ครบ ใช้ Dragon Skin ก่อนปะทะกับกองม้าหนัก",
-        },
-      },
-      {
-        id: "dragon-warrior",
-        name: "Dragon Warrior",
-        tier: "Tier 2 Melee",
-        role: { en: "Versatile Fighter", th: "นักสู้อเนกประสงค์" },
-        trainingBuildings: ["Dojo", "Target Range"],
-        damageType: "Cutting",
-        armorType: "Medium",
-        battleGears: [
-          {
-            name: "Ki Shield",
-            buildingRequired: "Dragon Shrine",
-            description: {
-              en: "Projects a magical barrier that blocks incoming ranged projectiles for several seconds.",
-              th: "ฉายเกราะป้องกันเวทมนตร์ที่สกัดกั้นกระสุนระยะไกลที่เข้ามาเป็นระยะเวลาหลายวินาที",
-            },
-            type: "Defensive",
-          },
-        ],
-        notes: {
-          en: "A strong mid-game unit unlocked after building the Target Range. Ki Shield makes your melee ball near-immune to archer fire — activate it before charging.",
-          th: "ยูนิตกลางเกมที่แข็งแกร่ง ปลดล็อกหลังสร้าง Target Range Ki Shield ทำให้กองทัพระยะประชิดใกล้จะแพ้ไม่ได้ต่อธนู — เปิดใช้ก่อนบุก",
-        },
-      },
-      {
-        id: "spearman",
-        name: "Spearman",
-        tier: "Tier 1 Melee",
-        role: { en: "Anti-Cavalry Specialist", th: "ผู้เชี่ยวชาญต้านม้า" },
-        trainingBuildings: ["Dojo"],
-        damageType: "Piercing",
-        armorType: "Light",
-        battleGears: [],
-        isAntiCavalry: true,
-        notes: {
-          en: "Your answer to any cavalry-heavy bot. Build 6–8 immediately when you scout horse units. Cheap, fast to produce, and devastating against Horse armor type.",
-          th: "คำตอบต่อบอทที่เน้นม้าทุกตัว สร้าง 6–8 ตัวทันทีเมื่อสอดแนมเจอยูนิตม้า ราคาถูก ผลิตเร็ว และน่ากลัวมากต่อเกราะประเภทม้า",
-        },
-      },
-      {
-        id: "archer",
-        name: "Archer",
-        tier: "Tier 1 Ranged",
-        role: { en: "Ranged DPS", th: "ดาเมจระยะไกล" },
-        trainingBuildings: ["Target Range"],
-        damageType: "Piercing",
-        armorType: "Unarmored",
-        battleGears: [
-          {
-            name: "Fire Arrow",
-            buildingRequired: "Fireworks Factory",
-            description: {
-              en: "Dips arrows in alchemical fire, adding Fire damage to all ranged attacks for a limited time.",
-              th: "จุ่มลูกธนูในไฟเคมี เพิ่มความเสียหายประเภทไฟให้กับการโจมตีระยะไกลทั้งหมดเป็นเวลาจำกัด",
-            },
-            type: "Offensive",
-          },
-        ],
-        notes: {
-          en: "Ideal for harassing, holding chokepoints, and supporting melee from elevated terrain. Fire Arrow transforms Archers into powerful building killers.",
-          th: "เหมาะสำหรับการคุกคาม ยึดจุดคอขวด และสนับสนุนระยะประชิดจากพื้นที่สูง Fire Arrow เปลี่ยน Archers ให้กลายเป็นนักทำลายอาคาร",
-        },
-      },
-      {
-        id: "geisha",
-        name: "Geisha",
-        tier: "Support",
-        role: { en: "Healer / Yang Generator", th: "ฮีล / สร้าง Yang" },
-        trainingBuildings: ["Bathhouse"],
-        damageType: "Magic",
-        armorType: "Unarmored",
-        battleGears: [],
-        isHealer: true,
-        notes: {
-          en: "Critical support unit. Healers sustain your army, generate Yang Points by healing, and can be looped to farm Yang in the base. Never let them die.",
-          th: "ยูนิตสนับสนุนที่สำคัญมาก ฮีลกองทัพ สร้าง Yang Point ขณะฮีล และสามารถใช้ลูปฮีลเพื่อฟาร์ม Yang ในฐาน อย่าปล่อยให้ตาย",
-        },
-      },
-      {
-        id: "powderman",
-        name: "Powderman / Chemist",
-        tier: "Tier 2/3 Siege",
-        role: { en: "Siege / AoE", th: "บุกทำลาย / AoE" },
-        trainingBuildings: ["Fireworks Factory"],
-        damageType: "Explosive",
-        armorType: "Unarmored",
-        battleGears: [],
-        notes: {
-          en: "Excellent against building clusters and massed infantry. Explosive damage is double-effective vs. Buildings and Unarmored units. Protect them behind your melee wall.",
-          th: "ยอดเยี่ยมต่อกลุ่มอาคารและทหารราบที่รวมตัวกัน ความเสียหาย Explosive ได้สองเท่าต่ออาคารและยูนิตไร้เกราะ ต้องปกป้องพวกเขาด้วยแนวระยะประชิด",
-        },
-      },
-    ],
-  },
-  {
-    id: "serpent",
-    name: "Serpent Clan",
-    lore: {
-      en: "Children of shadow and venom. Serpent Clan masters guerrilla tactics, poison, and cunning ambushes from the darkness.",
-      th: "ลูกหลานแห่งเงาและพิษ เผ่างูใหญ่เชี่ยวชาญยุทธวิธีกองโจร พิษ และการดักโจมตีจากความมืด",
-    },
-    color: "from-green-900/60 to-teal-900/40 border-green-700/50",
-    units: [],
-  },
-  {
-    id: "lotus",
-    name: "Lotus Clan",
-    lore: {
-      en: "Weavers of death and rice-paddy alchemy. The Lotus Clan wields undead minions and powerful magic to overwhelm foes with sheer attrition.",
-      th: "นักปั้นความตายและเล่นแร่แปรธาตุในนาข้าว เผ่าดอกบัวควบคุมลูกสมุนผีดิบและเวทมนตร์อันทรงพลังเพื่อเอาชนะศัตรูด้วยการบั่นทอน",
-    },
-    color: "from-purple-900/60 to-violet-900/40 border-purple-700/50",
-    units: [],
-  },
-  {
-    id: "wolf",
-    name: "Wolf Clan",
-    lore: {
-      en: "Savage warriors born from the wilderness. Wolf Clan units are cheap, fast, and feral — punishing enemies who dare to overextend.",
-      th: "นักรบดุร้ายที่เกิดจากป่าดงดิบ ยูนิตของเผ่าหมาป่าราคาถูก เร็ว และโหดเหี้ยม — ลงโทษศัตรูที่กล้าขยายแนวรบมากเกินไป",
-    },
-    color: "from-blue-900/60 to-slate-900/40 border-blue-700/50",
-    units: [],
-  },
-];
 
 // ─── GAMEPLAY GUIDES ─────────────────────────────────────────
 

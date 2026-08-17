@@ -15,7 +15,7 @@ import {
 import BotCard from "@/components/BotCard";
 import UnitTable from "@/components/UnitTable";
 import GameplayGuides from "@/components/GameplayGuides";
-import { BOT_PROFILES, TIER_ORDER } from "@/data/battleRealmsData";
+import { BOT_PROFILES, TIER_ORDER, ALL_UNITS_DATA } from "@/data/battleRealmsData";
 import type { BotTier } from "@/data/battleRealmsData";
 import { UI } from "@/data/translations";
 import { LanguageProvider, useLang, type Lang } from "@/context/LanguageContext";
@@ -40,7 +40,7 @@ function LanguageSwitcher() {
           id={`lang-${code}`}
           onClick={() => setLang(code)}
           aria-pressed={lang === code}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-200 ${
             lang === code
               ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm"
               : "text-zinc-500 hover:text-zinc-200"
@@ -76,7 +76,7 @@ function TabButton({
       id={`tab-${tab}`}
       role="tab"
       aria-selected={isActive}
-      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
+      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-base font-semibold transition-all duration-200 whitespace-nowrap ${
         isActive
           ? "bg-amber-500/15 text-amber-300 border border-amber-500/40 shadow-lg shadow-amber-900/20"
           : "text-zinc-400 border border-transparent hover:text-zinc-200 hover:bg-zinc-800/60"
@@ -102,7 +102,7 @@ function TierPill({
   return (
     <button
       onClick={onClick}
-      className={`px-3 py-1 rounded-full text-xs font-bold border transition-all duration-150 ${
+      className={`px-3 py-1 rounded-full text-sm font-bold border transition-all duration-150 ${
         active
           ? "bg-amber-500/20 text-amber-300 border-amber-500/50"
           : "bg-zinc-800/60 text-zinc-500 border-zinc-700 hover:border-zinc-500 hover:text-zinc-300"
@@ -157,36 +157,36 @@ function InnerPage() {
               <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
                 <Flame className="w-5 h-5 text-amber-400" />
               </div>
-              <span className="text-xs font-bold text-amber-500/70 uppercase tracking-widest">
+              <span className="text-sm font-bold text-amber-500/70 uppercase tracking-widest">
                 {t(UI.header.fanGuide)}
               </span>
             </div>
 
             {/* Title */}
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-5xl font-black tracking-tight leading-tight">
               <span className="gradient-text">Battle Realms</span>
               <br />
-              <span className="text-zinc-300 text-xl sm:text-2xl md:text-3xl font-bold tracking-wider">
+              <span className="text-zinc-300 text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider">
                 {t(UI.header.subtitle)}
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="max-w-xl text-sm sm:text-base text-zinc-500 leading-relaxed">
+            <p className="max-w-xl text-base sm:text-lg text-zinc-500 leading-relaxed">
               {t(UI.header.heroDesc)}
             </p>
 
             {/* Stats Row */}
             <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
               {[
-                { value: "10", labelKey: "statBots" as const },
-                { value: "6", labelKey: "statUnits" as const },
+                { value: BOT_PROFILES.length.toString(), labelKey: "statBots" as const },
+                { value: ALL_UNITS_DATA.length.toString(), labelKey: "statUnits" as const },
                 { value: "4", labelKey: "statGuides" as const },
                 { value: "6×6", labelKey: "statMatchups" as const },
               ].map((s) => (
                 <div key={s.labelKey} className="flex flex-col items-center gap-0.5 px-3">
-                  <span className="text-lg font-black text-amber-400 tabular-nums">{s.value}</span>
-                  <span className="text-[10px] text-zinc-600 font-medium uppercase tracking-wider">
+                  <span className="text-xl font-black text-amber-400 tabular-nums">{s.value}</span>
+                  <span className="text-sm text-zinc-600 font-medium uppercase tracking-wider">
                     {UI.header[s.labelKey][lang]}
                   </span>
                 </div>
@@ -246,7 +246,7 @@ function InnerPage() {
                   placeholder={t(UI.botList.searchPlaceholder)}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-xl pl-10 pr-10 py-2.5 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20 transition-colors"
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-xl pl-10 pr-10 py-2.5 text-base text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20 transition-colors"
                 />
                 {search && (
                   <button
@@ -262,7 +262,7 @@ function InnerPage() {
               <button
                 id="tier-filter-toggle"
                 onClick={() => setFilterOpen((v) => !v)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold border transition-all duration-200 ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-base font-semibold border transition-all duration-200 ${
                   selectedTier !== "ALL"
                     ? "bg-amber-500/15 text-amber-300 border-amber-500/40"
                     : "bg-zinc-900 border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200"
@@ -297,7 +297,7 @@ function InnerPage() {
 
             {/* Results Count */}
             <div className="flex items-center justify-between">
-              <p className="text-xs text-zinc-600">
+              <p className="text-sm text-zinc-600">
                 {t(UI.botList.showing)}{" "}
                 <span className="text-zinc-400 font-semibold">{sortedBots.length}</span>{" "}
                 {t(UI.botList.of)}{" "}
@@ -316,7 +316,7 @@ function InnerPage() {
                     setSearch("");
                     setSelectedTier("ALL");
                   }}
-                  className="text-xs text-zinc-500 hover:text-zinc-300 flex items-center gap-1 transition-colors"
+                  className="text-sm text-zinc-500 hover:text-zinc-300 flex items-center gap-1 transition-colors"
                 >
                   <X className="w-3 h-3" /> {t(UI.botList.clearFilters)}
                 </button>
@@ -335,7 +335,7 @@ function InnerPage() {
                 <Search className="w-10 h-10 text-zinc-700" />
                 <div className="text-center">
                   <p className="text-zinc-400 font-semibold">{t(UI.botList.noBots)}</p>
-                  <p className="text-zinc-600 text-sm mt-1">{t(UI.botList.noBotsHint)}</p>
+                  <p className="text-zinc-600 text-base mt-1">{t(UI.botList.noBotsHint)}</p>
                 </div>
               </div>
             )}
@@ -352,7 +352,7 @@ function InnerPage() {
       {/* ── Footer ────────────────────────────────────────────── */}
       <footer className="border-t border-zinc-800/60 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-zinc-600 text-xs">
+          <div className="flex items-center gap-2 text-zinc-600 text-sm">
             <Flame className="w-3.5 h-3.5 text-amber-700" />
             <span>{t(UI.footer.disclaimer)}</span>
           </div>
