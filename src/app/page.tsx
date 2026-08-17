@@ -17,10 +17,42 @@ import UnitTable from "@/components/UnitTable";
 import GameplayGuides from "@/components/GameplayGuides";
 import { BOT_PROFILES, TIER_ORDER } from "@/data/battleRealmsData";
 import type { BotTier } from "@/data/battleRealmsData";
+import { UI } from "@/data/translations";
+import { LanguageProvider, useLang, type Lang } from "@/context/LanguageContext";
 
 // ─── Types ────────────────────────────────────────────────────
 
 type Tab = "bots" | "units" | "guides";
+
+// ─── Language Switcher ────────────────────────────────────────
+
+function LanguageSwitcher() {
+  const { lang, setLang } = useLang();
+  const options: { code: Lang; flag: string; label: string }[] = [
+    { code: "en", flag: "🇬🇧", label: "EN" },
+    { code: "th", flag: "🇹🇭", label: "TH" },
+  ];
+  return (
+    <div className="flex items-center gap-1 bg-zinc-900 border border-zinc-700 rounded-xl p-1 shrink-0">
+      {options.map(({ code, flag, label }) => (
+        <button
+          key={code}
+          id={`lang-${code}`}
+          onClick={() => setLang(code)}
+          aria-pressed={lang === code}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 ${
+            lang === code
+              ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm"
+              : "text-zinc-500 hover:text-zinc-200"
+          }`}
+        >
+          <span>{flag}</span>
+          <span>{label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
 
 // ─── Tab Button ───────────────────────────────────────────────
 
@@ -81,27 +113,24 @@ function TierPill({
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────
+// ─── Inner Page (has access to lang context) ──────────────────
 
-export default function HomePage() {
+function InnerPage() {
+  const { t, lang } = useLang();
+
   const [activeTab, setActiveTab] = useState<Tab>("bots");
   const [search, setSearch] = useState("");
   const [selectedTier, setSelectedTier] = useState<BotTier | "ALL">("ALL");
   const [filterOpen, setFilterOpen] = useState(false);
 
-  // Filtered + searched bots
   const filteredBots = useMemo(() => {
     return BOT_PROFILES.filter((bot) => {
-      const matchesSearch = bot.name
-        .toLowerCase()
-        .includes(search.toLowerCase());
-      const matchesTier =
-        selectedTier === "ALL" || bot.tier === selectedTier;
+      const matchesSearch = bot.name.toLowerCase().includes(search.toLowerCase());
+      const matchesTier = selectedTier === "ALL" || bot.tier === selectedTier;
       return matchesSearch && matchesTier;
     });
   }, [search, selectedTier]);
 
-  // Sort by tier order
   const sortedBots = useMemo(() => {
     return [...filteredBots].sort(
       (a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier)
@@ -129,7 +158,7 @@ export default function HomePage() {
                 <Flame className="w-5 h-5 text-amber-400" />
               </div>
               <span className="text-xs font-bold text-amber-500/70 uppercase tracking-widest">
-                Fan Strategy Guide
+                {t(UI.header.fanGuide)}
               </span>
             </div>
 
@@ -138,33 +167,27 @@ export default function HomePage() {
               <span className="gradient-text">Battle Realms</span>
               <br />
               <span className="text-zinc-300 text-xl sm:text-2xl md:text-3xl font-bold tracking-wider">
-                Strategy & Database Hub
+                {t(UI.header.subtitle)}
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="max-w-xl text-sm sm:text-base text-zinc-500 leading-relaxed">
-              Master every AI opponent, unlock unit synergies, and dominate the
-              battlefield with comprehensive guides and data.
+              {t(UI.header.heroDesc)}
             </p>
 
             {/* Stats Row */}
             <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
               {[
-                { value: "10", label: "AI Bot Profiles" },
-                { value: "6", label: "Dragon Clan Units" },
-                { value: "4", label: "Gameplay Guides" },
-                { value: "6×6", label: "Damage Matchups" },
+                { value: "10", labelKey: "statBots" as const },
+                { value: "6", labelKey: "statUnits" as const },
+                { value: "4", labelKey: "statGuides" as const },
+                { value: "6×6", labelKey: "statMatchups" as const },
               ].map((s) => (
-                <div
-                  key={s.label}
-                  className="flex flex-col items-center gap-0.5 px-3"
-                >
-                  <span className="text-lg font-black text-amber-400 tabular-nums">
-                    {s.value}
-                  </span>
+                <div key={s.labelKey} className="flex flex-col items-center gap-0.5 px-3">
+                  <span className="text-lg font-black text-amber-400 tabular-nums">{s.value}</span>
                   <span className="text-[10px] text-zinc-600 font-medium uppercase tracking-wider">
-                    {s.label}
+                    {UI.header[s.labelKey][lang]}
                   </span>
                 </div>
               ))}
@@ -182,22 +205,27 @@ export default function HomePage() {
               activeTab={activeTab}
               onClick={() => setActiveTab("bots")}
               icon={<Bot className="w-4 h-4" />}
-              label="Bot Database"
+              label={t(UI.nav.bots)}
             />
             <TabButton
               tab="units"
               activeTab={activeTab}
               onClick={() => setActiveTab("units")}
               icon={<Swords className="w-4 h-4" />}
-              label="Units & Gear"
+              label={t(UI.nav.units)}
             />
             <TabButton
               tab="guides"
               activeTab={activeTab}
               onClick={() => setActiveTab("guides")}
               icon={<BookOpen className="w-4 h-4" />}
-              label="Guides"
+              label={t(UI.nav.guides)}
             />
+
+            {/* Language Switcher — pushed to the right */}
+            <div className="ml-auto">
+              <LanguageSwitcher />
+            </div>
           </div>
         </div>
       </div>
@@ -215,7 +243,7 @@ export default function HomePage() {
                 <input
                   id="bot-search"
                   type="search"
-                  placeholder="Search bot by name…"
+                  placeholder={t(UI.botList.searchPlaceholder)}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="w-full bg-zinc-900 border border-zinc-700 rounded-xl pl-10 pr-10 py-2.5 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20 transition-colors"
@@ -241,7 +269,7 @@ export default function HomePage() {
                 }`}
               >
                 <Filter className="w-3.5 h-3.5" />
-                Tier: {selectedTier}
+                {t(UI.botList.tierLabel)}: {selectedTier}
                 <ChevronDown
                   className={`w-3.5 h-3.5 transition-transform duration-200 ${
                     filterOpen ? "rotate-180" : ""
@@ -253,13 +281,13 @@ export default function HomePage() {
             {/* Tier Filter Chips */}
             {filterOpen && (
               <div className="flex flex-wrap gap-2 p-3 bg-zinc-900 border border-zinc-800 rounded-xl animate-in slide-in-from-top-1 duration-200">
-                {tierOptions.map((t) => (
+                {tierOptions.map((tier) => (
                   <TierPill
-                    key={t}
-                    tier={t}
-                    active={selectedTier === t}
+                    key={tier}
+                    tier={tier}
+                    active={selectedTier === tier}
                     onClick={() => {
-                      setSelectedTier(t);
+                      setSelectedTier(tier);
                       setFilterOpen(false);
                     }}
                   />
@@ -270,17 +298,16 @@ export default function HomePage() {
             {/* Results Count */}
             <div className="flex items-center justify-between">
               <p className="text-xs text-zinc-600">
-                Showing{" "}
-                <span className="text-zinc-400 font-semibold">
-                  {sortedBots.length}
-                </span>{" "}
-                of{" "}
-                <span className="text-zinc-400 font-semibold">
-                  {BOT_PROFILES.length}
-                </span>{" "}
-                bots
+                {t(UI.botList.showing)}{" "}
+                <span className="text-zinc-400 font-semibold">{sortedBots.length}</span>{" "}
+                {t(UI.botList.of)}{" "}
+                <span className="text-zinc-400 font-semibold">{BOT_PROFILES.length}</span>{" "}
+                {t(UI.botList.botsWord)}
                 {selectedTier !== "ALL" && (
-                  <span className="text-amber-500/70"> (Tier {selectedTier})</span>
+                  <span className="text-amber-500/70">
+                    {" "}
+                    ({t(UI.botList.tierSuffix)} {selectedTier})
+                  </span>
                 )}
               </p>
               {(search || selectedTier !== "ALL") && (
@@ -291,7 +318,7 @@ export default function HomePage() {
                   }}
                   className="text-xs text-zinc-500 hover:text-zinc-300 flex items-center gap-1 transition-colors"
                 >
-                  <X className="w-3 h-3" /> Clear filters
+                  <X className="w-3 h-3" /> {t(UI.botList.clearFilters)}
                 </button>
               )}
             </div>
@@ -307,10 +334,8 @@ export default function HomePage() {
               <div className="flex flex-col items-center justify-center py-20 gap-4">
                 <Search className="w-10 h-10 text-zinc-700" />
                 <div className="text-center">
-                  <p className="text-zinc-400 font-semibold">No bots found</p>
-                  <p className="text-zinc-600 text-sm mt-1">
-                    Try a different name or tier filter.
-                  </p>
+                  <p className="text-zinc-400 font-semibold">{t(UI.botList.noBots)}</p>
+                  <p className="text-zinc-600 text-sm mt-1">{t(UI.botList.noBotsHint)}</p>
                 </div>
               </div>
             )}
@@ -329,24 +354,29 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-zinc-600 text-xs">
             <Flame className="w-3.5 h-3.5 text-amber-700" />
-            <span>
-              Battle Realms Strategy & Database Hub — Fan-made. Not affiliated
-              with Liquid Entertainment.
-            </span>
+            <span>{t(UI.footer.disclaimer)}</span>
           </div>
-          <div className="flex items-center gap-3">
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-600 hover:text-zinc-300 transition-colors"
-              aria-label="GitHub"
-            >
-              <GitBranch className="w-4 h-4" />
-            </a>
-          </div>
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-zinc-600 hover:text-zinc-300 transition-colors"
+            aria-label="GitHub"
+          >
+            <GitBranch className="w-4 h-4" />
+          </a>
         </div>
       </footer>
     </div>
+  );
+}
+
+// ─── Root Export — wraps everything in LanguageProvider ───────
+
+export default function HomePage() {
+  return (
+    <LanguageProvider>
+      <InnerPage />
+    </LanguageProvider>
   );
 }
