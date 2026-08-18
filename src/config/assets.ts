@@ -23,13 +23,44 @@ export function toSlug(name: string): string {
 // Key = UnitData.id  (e.g. "dragon_samurai")
 
 const UNIT_OVERRIDES: Record<string, string> = {
-  // Add manual overrides here if the file name differs from the ID
-  // e.g. dragon_warrior: "dragon_warrior_alt"
+  // Dragon Clan — logo icons from wiki
+  dragon_peasant:             "dragon_peasant.gif",
+  dragon_spearman:            "dragon_spearman.gif",
+  dragon_archer:              "dragon_archer.gif",
+  dragon_chemist:             "dragon_chemist.gif",
+  dragon_warrior:             "dragon_warrior.gif",
+  dragon_kabuki_warrior:      "dragon_kabuki_warrior.gif",
+  dragon_powder_keg_cannoneer:"dragon_powder_keg_cannoneer.gif",
+  dragon_samurai:             "dragon_samurai.gif",
+  dragon_geisha:              "dragon_geisha.gif",
+  dragon_guardian:            "dragon_guardian.jpg",
+  dragon_battle_maiden:       "dragon_battle_maiden_icon.png",
+
+  // Wolf Clan — all use logo icon .gif files
+  wolf_peasant:       "wolf_peasant.gif",
+  wolf_brawler:       "wolf_brawler.gif",
+  wolf_hurler:        "wolf_hurler.gif",
+  wolf_sledger:       "wolf_sledger.gif",
+  wolf_digger:        "wolf_digger.gif",
+  wolf_pitch_slinger: "wolf_pitch_slinger.gif",
+  wolf_ballistaman:   "wolf_ballistaman.gif",
+  wolf_mauler:        "wolf_mauler.gif",
+  wolf_berserker:     "wolf_berserker.gif",
+  wolf_druidess:      "wolf_druidess.gif",
+  wolf_werewolf:      "wolf_werewolf.gif",
+  wolf_pack_master:   "wolf_pack_master.gif",
+  wolf_shale_lord:    "wolf_shale_lord.gif",
+  wolf_grayback:      "wolf_grayback.gif",
+  wolf_longtooth:     "wolf_longtooth.gif",
+  wolf_wildeye:       "wolf_wildeye.png",
+  wolf_gaihla:        "wolf_gaihla.gif",
+  wolf_dryad:         "wolf_dryad.png",
 };
 
 export function getUnitImagePath(unitId: string): string {
-  const slug = UNIT_OVERRIDES[unitId] ?? unitId;
-  return `/assets/units/${slug}.png`;
+  const override = UNIT_OVERRIDES[unitId];
+  if (override) return `/assets/units/${override}`;
+  return `/assets/units/${unitId}.png`;
 }
 
 // ─── Building icons ───────────────────────────────────────────
@@ -97,6 +128,26 @@ const GEAR_OVERRIDES: Record<string, string> = {
   "Magic Negation": "zen_teppo_magic_negation.png",
   "Call Horse": "zen_garrin_call_horse.gif",
 
+  // Wolf Clan
+  "Zen Counter Punch": "wolf_zen_counter_punch.gif",
+  "Lava Rock": "wolf_lava_rock.gif",
+  "Stun Slam": "wolf_stun_slam.gif",
+  "Tunneling": "wolf_tunneling.png",
+  "Scorched Earth": "wolf_scorched_earth.gif",
+  "Totem": "wolf_totem.gif",
+  "Wrecking Ball": "wolf_wrecking_ball.gif",
+  "Lycanthropy": "wolf_lycanthropy.gif",
+  "Blessing": "wolf_blessing.gif",
+  "Shale Armor": "wolf_shale_armor.png",
+  "Wolf's Bite": "wolf_wolfs_bite.gif",
+  "Howl": "wolf_howl.gif",
+  "Armored Friend": "wolf_armored_friend.gif",
+  "Lupine Rage": "wolf_lupine_rage.gif",
+  "Razor-Edged Boomerang": "wolf_razor_boomerang.gif",
+  "Ancestral Call": "wolf_ancestral_call.jpg",
+  "Chant of Life": "wolf_chant_of_life.gif",
+  "Howling Winds": "wolf_howling_winds.png",
+
   // Legacy & other clans
   "Stun Thrust": "dragon_stun_strike.gif",
   "Fire Arrow": "dragon_fire_arrows.gif",
@@ -114,11 +165,6 @@ const GEAR_OVERRIDES: Record<string, string> = {
   "Whirling Dervish": "whirling_dervish.png",
   "Death Siphon": "death_siphon.png",
   "Soul Chill": "soul_chill.png",
-  "Zen Focus": "zen_focus.png",
-  "Lava Rocks": "lava_rocks.png",
-  "Wrecking Ball": "wrecking_ball.png",
-  "Lycanthropy / Blood Lust": "lycanthropy_blood_lust.png",
-  "Entangle Roots": "entangle_roots.png",
 };
 
 export function getGearImagePath(gearNameEn: string): string {
@@ -143,7 +189,10 @@ export const ALL_UNIT_IDS = [
   // Lotus
   "lotus_blade_acolyte", "lotus_staff_adept", "lotus_unclean_one", "lotus_warlock",
   // Wolf
-  "wolf_brawler", "wolf_hurler", "wolf_mauler", "wolf_berserker", "wolf_druidess",
+  "wolf_peasant", "wolf_brawler", "wolf_hurler", "wolf_sledger", "wolf_digger",
+  "wolf_pitch_slinger", "wolf_ballistaman", "wolf_mauler", "wolf_berserker",
+  "wolf_druidess", "wolf_werewolf", "wolf_pack_master",
+  "wolf_shale_lord", "wolf_grayback", "wolf_longtooth", "wolf_wildeye", "wolf_gaihla", "wolf_dryad",
 ] as const;
 
 export const ALL_BUILDING_KEYS = Object.keys(BUILDING_OVERRIDES) as string[];
