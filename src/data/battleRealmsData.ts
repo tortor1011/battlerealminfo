@@ -477,9 +477,11 @@ export type ArmorType = "Unarmored" | "Light" | "Medium" | "Heavy" | "Building" 
 
 export interface BattleGear {
   name: { en: string; th: string };
-  building: { en: string; th: string };
-  type: "Offensive" | "Defensive" | "Utility";
+  type: "Offensive" | "Defensive" | "Utility" | "Passive" | "Toggle" | "Initiate";
   effect: { en: string; th: string };
+  duration?: { en: string; th: string };
+  building?: { en: string; th: string };
+  icon?: string;
 }
 
 export interface UnitData {
@@ -508,106 +510,238 @@ export interface ClanData {
 export const ALL_UNITS_DATA: UnitData[] = [
   // ==================== DRAGON CLAN ====================
   {
+    id: "dragon_peasant",
+    name: { en: "Peasant", th: "ชาวนา (Peasant)" },
+    tier: "Tier 0 Worker",
+    role: { en: "Gatherer & Base Builder", th: "เก็บเกี่ยวทรัพยากร & ฐานการฝึกทหาร" },
+    clan: "Dragon",
+    dmgType: "Piercing",
+    armorType: "Unarmored",
+    trainingPath: [{ en: "Peasant Hut", th: "กระท่อมชาวนา (Peasant Hut)" }],
+    gears: [],
+    description: {
+      en: "The humble foundation of the Dragon Clan economy. Harvests rice, waters crops, puts out fires, and enters military dojos for training.",
+      th: "รากฐานเศรษฐกิจของตระกูลมังกร ทำหน้าที่เกี่ยวข้าว ตักน้ำ ดับเพลิงอาคาร และเข้าฝึกวิชาในโรงฝึกเพื่อพัฒนาเป็นนักรบ",
+    },
+  },
+  {
     id: "dragon_spearman",
     name: { en: "Spearman", th: "พลหอก (Spearman)" },
     tier: "Tier 1 Melee",
-    role: { en: "Anti-Cavalry Specialist", th: "ผู้เชี่ยวชาญการต่อต้านม้า" },
+    role: { en: "Anti-Cavalry Specialist", th: "ผู้เชี่ยวชาญการต่อต้านม้า & ทหารราบแนวหน้า" },
     clan: "Dragon",
     dmgType: "Piercing",
     armorType: "Light",
     trainingPath: [{ en: "Dojo", th: "โรงดาบ (Dojo)" }],
     gears: [
       {
-        name: { en: "Stun Thrust", th: "แทงสกัดมึนงง" },
-        building: { en: "Dragon Shrine", th: "Dragon Shrine" },
+        name: { en: "Stun Strike", th: "แทงสกัดมึนงง" },
         type: "Offensive",
         effect: {
-          en: "Strikes enemies with a powerful thrust, stunning them briefly.",
-          th: "แทงกระแทกศัตรูอย่างรุนแรง ทำให้เป้าหมายติดสถานะมึนงง",
+          en: "Strikes an enemy with immense thrusting force, stunning the target for a brief duration (effective against Zen Masters).",
+          th: "แทงกระแทกศัตรูอย่างรุนแรง ทำให้เป้าหมายติดสถานะมึนงงชั่วคราว (ใช้หยุด Zen Master ได้ชะงัด)",
         },
+        duration: { en: "~3-4 seconds stun", th: "มึนงงประมาณ 3-4 วินาที" },
+      },
+      {
+        name: { en: "Whirling Spear", th: "ควงหอกสะเก็ดไฟ" },
+        type: "Offensive",
+        effect: {
+          en: "Fuses black powder with the spear and twirls it rapidly, spraying explosive sparks that deal projectile damage to all nearby enemies.",
+          th: "ควงหอกติดดินปืนอย่างรวดเร็ว ปล่อยสะเก็ดไฟสร้างความเสียหายรอบตัวเป็นวงกว้าง จัดการกลุ่มศัตรูเกราะบางได้ดีเยี่ยม",
+        },
+        duration: { en: "Active spin (~4s)", th: "ควงต่อเนื่องประมาณ 4 วินาที" },
       },
     ],
     description: {
-      en: "Primary counter to cavalry units. Deals high piercing damage against horses.",
-      th: "ตัวเคาน์เตอร์ทหารม้าหลัก สร้างความเสียหายทะลวงเกราะใส่ยูนิตขี่ม้าอย่างรุนแรง",
+      en: "Primary counter to cavalry units. Deals high piercing damage against horses and controls the frontline.",
+      th: "ตัวเคาน์เตอร์ทหารม้าหลัก สร้างความเสียหายทะลวงเกราะใส่ยูนิตขี่ม้าอย่างรุนแรงและคุมแนวรบได้อย่างมั่นคง",
     },
   },
   {
     id: "dragon_archer",
     name: { en: "Archer", th: "พลธนู (Archer)" },
     tier: "Tier 1 Ranged",
-    role: { en: "Ranged Harasser / Scout", th: "ยิงสกัดระยะไกล / สอดแนม" },
+    role: { en: "Ranged Harasser & Scout", th: "พลยิงระยะไกล & สอดแนม" },
     clan: "Dragon",
     dmgType: "Piercing",
     armorType: "Unarmored",
-    trainingPath: [{ en: "Target Range", th: "ลานยิงธนู (Target Range)" }],
+    trainingPath: [{ en: "Target Range", th: "ลานฝึกยิงธนู (Target Range)" }],
     gears: [
       {
-        name: { en: "Fire Arrow", th: "ธนูเพลิง" },
-        building: { en: "Fireworks Factory", th: "Fireworks Factory" },
-        type: "Offensive",
-        effect: {
-          en: "Ignites targets and deals continuous Fire damage, highly effective against buildings.",
-          th: "ยิงลูกศรไฟเผาเป้าหมายและสร้างความเสียหายไฟต่อเนื่อง พังตึกได้เร็ว",
-        },
-      },
-      {
-        name: { en: "Zen Arrow", th: "ลูกศรส่องสว่าง" },
-        building: { en: "Dragon Shrine", th: "Dragon Shrine" },
+        name: { en: "Zen Arrows", th: "ลูกศรส่องนภา" },
         type: "Utility",
         effect: {
-          en: "Fires an arrow high into the sky to reveal a huge area of fog of war.",
-          th: "ยิงลูกศรขึ้นฟ้าเพื่อเปิดหมอกส่องแผนที่ระยะไกล",
+          en: "Fires a mystical arrow high into the sky that grants vision and reveals the fog of war in a large target area around where it lands.",
+          th: "ยิงลูกศรขึ้นสู่ท้องฟ้าเพื่อเปิดแผนที่และหมอกสงคราม (Fog of War) ในบริเวณเป้าหมายระยะไกล",
         },
+        duration: { en: "Reveals map for ~15s", th: "เปิดหมอกส่องพื้นที่นาน 15 วินาที" },
+      },
+      {
+        name: { en: "Fire Arrows", th: "ลูกศรเพลิง" },
+        type: "Offensive",
+        effect: {
+          en: "Equips arrows with flaming tips, dealing continuous Fire damage to targets and rapidly setting enemy buildings ablaze.",
+          th: "เปลี่ยนหัวลูกศรเป็นไฟ สร้างความเสียหายเพลิงต่อเนื่อง และเผาทำลายสิ่งก่อสร้างของศัตรูได้อย่างรวดเร็ว",
+        },
+        duration: { en: "Continuous burn damage", th: "เผาไหม้สร้างดาเมจไฟต่อเนื่อง" },
       },
     ],
     description: {
-      en: "Fast and versatile ranged unit. Strong on elevated cliffs or watchtowers.",
-      th: "ยูนิตยิงไกลที่มีความคล่องตัวสูง ได้เปรียบมากเมื่อยืนบนหน้าผาหรือหอคอย",
+      en: "Fast and versatile ranged unit. Strong on elevated cliffs or watchtowers, providing vital vision and siege burning.",
+      th: "ยูนิตยิงไกลที่มีความคล่องตัวสูง ได้เปรียบมากเมื่อยืนบนหน้าผาหรือหอคอย ช่วยเปิดหมอกและเผาทำลายฐานข้าศึก",
+    },
+  },
+  {
+    id: "dragon_chemist",
+    name: { en: "Chemist", th: "นักเล่นแร่แปรธาตุ (Chemist)" },
+    tier: "Tier 1 Support / Siege",
+    role: { en: "Bombardier & Passive Healer", th: "พลปาระเบิด & ฟื้นฟูเพื่อนร่วมทัพ" },
+    clan: "Dragon",
+    dmgType: "Explosive",
+    armorType: "Unarmored",
+    trainingPath: [{ en: "Fireworks Factory", th: "โรงงานดอกไม้ไฟ (Fireworks Factory)" }],
+    gears: [
+      {
+        name: { en: "Mandrake Spores", th: "ละอองสปอร์แมนเดรก" },
+        type: "Utility",
+        effect: {
+          en: "Flings a flask of soporific spores that reduces enemy armor and slows enemy movement and attack speed.",
+          th: "ปาขวดสปอร์พืชพิษ ทำให้เกราะของศัตรูลดลง พร้อมสโลว์ความเร็วในการเคลื่อนที่และโจมตี",
+        },
+        duration: { en: "Debuff lasts ~10s", th: "ลดพลังป้องกันและสโลว์นาน 10 วินาที" },
+      },
+      {
+        name: { en: "Starburst Rockets", th: "จรวดดอกไม้ไฟระเบิดกระจาย" },
+        type: "Offensive",
+        effect: {
+          en: "Fires a salvo of high-explosive fireworks rockets, dealing massive area-of-effect explosive damage to enemy buildings and clusters of troops (3 charges).",
+          th: "ยิงจรวดดอกไม้ไฟระเบิดเป็นวงกว้าง สร้างความเสียหายระเบิดรุนแรงใส่สิ่งก่อสร้างและยูนิตศัตรูที่ยืนรวมกัน (พกได้ 3 ลูก)",
+        },
+        duration: { en: "Instant AoE burst", th: "ระเบิดสร้างความเสียหายเป็นวงกว้างทันที" },
+      },
+    ],
+    description: {
+      en: "Armed with volatile alchemy and healing herbs, the Chemist passively regenerates nearby allies' health while bombarding enemy structures.",
+      th: "พกพาสมุนไพรรักษาคอยฮีลเลือดให้เพื่อนรอบตัวเมื่อยืนนิ่ง พร้อมขว้างสารเคมีระเบิดทำลายสิ่งก่อสร้างศัตรู",
     },
   },
   {
     id: "dragon_warrior",
     name: { en: "Dragon Warrior", th: "นักรบมังกร (Dragon Warrior)" },
     tier: "Tier 2 Melee",
-    role: { en: "Versatile Brawler", th: "นักสู้แนวหน้าสารพัดประโยชน์" },
+    role: { en: "Versatile Brawler & Flanker", th: "นักสู้สายประชิดสารพัดประโยชน์" },
     clan: "Dragon",
     dmgType: "Cutting",
     armorType: "Medium",
     trainingPath: [
       { en: "Dojo", th: "โรงดาบ (Dojo)" },
-      { en: "Target Range", th: "ลานยิงธนู (Target Range)" },
+      { en: "Target Range", th: "ลานฝึกยิงธนู (Target Range)" },
     ],
     gears: [
       {
-        name: { en: "Ki Shield", th: "โล่พลังปราณ" },
-        building: { en: "Dragon Shrine", th: "Dragon Shrine" },
+        name: { en: "Chi Shield", th: "โล่พลังปราณ" },
         type: "Defensive",
         effect: {
-          en: "Creates a barrier that deflects incoming ranged projectiles.",
-          th: "กางม่านพลังป้องกันการโจมตีระยะไกลชั่วขณะ",
+          en: "Projects an energy shield around the warrior that deflects and completely negates incoming ranged projectile attacks for the duration.",
+          th: "สร้างโล่ม่านพลังปราณคุ้มกัน ปัดป้องและบล็อกการโจมตีระยะไกล (ลูกธนู กระสุน) ทั้งหมดโดยสมบูรณ์",
         },
+        duration: { en: "Active for ~10s", th: "ป้องกันการโจมตีระยะไกลนาน 10 วินาที" },
       },
       {
-        name: { en: "Chi Wave", th: "คลื่นพลังกระแทก" },
-        building: { en: "Fireworks Factory", th: "Fireworks Factory" },
-        type: "Offensive",
+        name: { en: "Flame Sword", th: "ดาบเพลิงพิฆาต" },
+        type: "Toggle",
         effect: {
-          en: "Unleashes a shockwave that knocks surrounding infantry to the ground.",
-          th: "ปล่อยคลื่นพลังกระแทกศัตรูรอบตัวให้ล้มลง",
+          en: "Enchants the warrior's twin blades with roaring flames, converting melee attacks into Fire damage that burns structures and scorches infantry.",
+          th: "เคลือบเปลวเพลิงลงบนดาบคู่ เปลี่ยนความเสียหายเป็นประเภท Fire เผาทำลายอาคารและศัตรูได้อย่างรวดเร็ว",
         },
+        duration: { en: "Drains stamina while active", th: "เปิดใช้งานต่อเนื่องโดยเผาผลาญ Stamina" },
       },
     ],
     description: {
-      en: "Core mid-game combatant capable of closing the distance and disrupting enemy formations.",
-      th: "ยูนิตหลักช่วงกลางเกม พุ่งเข้าชนเปิดจังหวะและทำลายแนวรบศัตรูได้ดี",
+      en: "The agile dual-blade vanguard of the Dragon Clan, mastering both offensive flame swordplay and projectile-deflecting chi barriers.",
+      th: "ทัพหน้าดาบคู่ผู้คล่องแคล่ว วิ่งเข้าประชิดได้อย่างรวดเร็วด้วยโล่ปราณกันธนู และจุดไฟเผาฐานด้วยเพลงดาบเพลิง",
+    },
+  },
+  {
+    id: "dragon_kabuki_warrior",
+    name: { en: "Kabuki Warrior", th: "นักรบคะบุกิ (Kabuki Warrior)" },
+    tier: "Tier 2 Hybrid Melee / Support",
+    role: { en: "Illusionist & Disruptor", th: "นักรบระบำมนตรา & ปั่นป่วนสนามรบ" },
+    clan: "Dragon",
+    dmgType: "Magic",
+    armorType: "Medium",
+    trainingPath: [
+      { en: "Dojo", th: "โรงดาบ (Dojo)" },
+      { en: "Fireworks Factory", th: "โรงงานดอกไม้ไฟ (Fireworks Factory)" },
+    ],
+    gears: [
+      {
+        name: { en: "Stardust", th: "ละอองดาวสะกดอาวุธ" },
+        type: "Utility",
+        effect: {
+          en: "Throws glistening stardust across an area that temporarily disables all enemy ranged weapon attacks, forcing ranged units into melee.",
+          th: "หว่านละอองดาวระยิบระยับ ปิดผนึกและทำให้ศัตรูในพื้นที่ไม่สามารถใช้อาวุธยิงระยะไกลได้ชั่วคราว",
+        },
+        duration: { en: "Disables ranged for ~8-10s", th: "ปิดการยิงระยะไกลของศัตรูนาน 8-10 วินาที" },
+      },
+      {
+        name: { en: "Flashpowder", th: "ผงแฟลชตาบอด" },
+        type: "Utility",
+        effect: {
+          en: "Unleashes a blinding flash of powder in a wide area, reducing enemy sight range to zero, lowering enemy defenses, and resetting enemy aggro (3 charges).",
+          th: "จุดระเบิดผงแสงวาบ ทำให้ศัตรูในระยะตาบอด ลดระยะการมองเห็นจนเหลือศูนย์ ลดเกราะศัตรู และรีเซ็ตเป้าหมายการโจมตี (พกได้ 3 ครั้ง)",
+        },
+        duration: { en: "Blinds enemies for ~6-8s", th: "ติดสถานะตาบอดและลดเกราะนาน 6-8 วินาที" },
+      },
+    ],
+    description: {
+      en: "An enigmatic theater warrior who juggles energy orbs to restore peasants' stamina and bewilders enemies with blinding magical powders.",
+      th: "นักรบละครคาบูกิผู้ใช้มนตราสับเปลี่ยน โยนลูกแก้วฟื้นพลัง Stamina ให้ชาวนา และใช้ผงสะกดปิดฉากทหารยิงไกลของข้าศึก",
+    },
+  },
+  {
+    id: "dragon_powder_keg_cannoneer",
+    name: { en: "Powder Keg Cannoneer", th: "พลปืนใหญ่ถังดินปืน (Powder Keg Cannoneer)" },
+    tier: "Tier 2 Heavy Ranged / Siege",
+    role: { en: "Long-Range Heavy Artillery", th: "ปืนใหญ่ถล่มฐานระยะไกล" },
+    clan: "Dragon",
+    dmgType: "Explosive",
+    armorType: "Heavy",
+    trainingPath: [
+      { en: "Target Range", th: "ลานฝึกยิงธนู (Target Range)" },
+      { en: "Fireworks Factory", th: "โรงงานดอกไม้ไฟ (Fireworks Factory)" },
+    ],
+    gears: [
+      {
+        name: { en: "Indirect Fire", th: "ยิงวิถีโค้งข้ามสิ่งกีดขวาง" },
+        type: "Toggle",
+        effect: {
+          en: "Adjusts the cannon trajectory to arc high above cliffs, trees, and obstacles, greatly increasing maximum attack range.",
+          th: "ปรับวิถีการยิงเป็นมุมโค้งสูง ข้ามหน้าผาและสิ่งกีดขวาง เพิ่มระยะยิงไกลขึ้นอย่างมหาศาล",
+        },
+        duration: { en: "Toggle mode (active until switched)", th: "เปิด/ปิด โหมดยิงวิถีโค้งได้ตามต้องการ" },
+      },
+      {
+        name: { en: "Shrapnel Keg", th: "ถังระเบิดสะเก็ดกระจาย" },
+        type: "Offensive",
+        effect: {
+          en: "Launches a massive reinforced keg filled with jagged shrapnel, detonating upon impact to deal devastating cutting/explosive damage across a huge radius.",
+          th: "ยิงถังดินปืนอัดสะเก็ดเหล็กขนาดใหญ่ ระเบิดสร้างความเสียหายสะเก็ดรุนแรงเป็นวงกว้างใส่ทหารราบศัตรู",
+        },
+        duration: { en: "Instant heavy AoE burst", th: "ระเบิดทำลายล้างเป็นวงกว้างทันที" },
+      },
+    ],
+    description: {
+      en: "The Dragon Clan's primary siege artillery unit, wielding a massive shoulder-mounted cannon capable of demolishing watchtowers and infantry formations from afar.",
+      th: "หน่วยปืนใหญ่หลักของตระกูลมังกร แบกกระบอกปืนใหญ่ยิงถล่มหอคอยและค่ายศัตรูจากระยะปลอดภัย",
     },
   },
   {
     id: "dragon_samurai",
     name: { en: "Samurai", th: "ซามูไร (Samurai)" },
-    tier: "Tier 3 Melee",
-    role: { en: "Elite Frontliner & Finisher", th: "นักรบยอดฝีมือแถวหน้า" },
+    tier: "Tier 3 Elite Melee",
+    role: { en: "Elite Champion & Army Inspirer", th: "สุดยอดนักรบเกราะหนัก & ผู้นำขวัญกำลังใจ" },
     clan: "Dragon",
     dmgType: "Cutting",
     armorType: "Heavy",
@@ -618,42 +752,307 @@ export const ALL_UNITS_DATA: UnitData[] = [
     ],
     gears: [
       {
-        name: { en: "Dragon Skin", th: "ผิวมังกรทอง" },
-        building: { en: "Dragon Shrine", th: "Dragon Shrine" },
-        type: "Defensive",
+        name: { en: "Yang Blade", th: "ดาบเทพหยาง" },
+        type: "Toggle",
         effect: {
-          en: "Dramatically reduces all incoming damage for a limited time.",
-          th: "ลดความเสียหายทุกชนิดที่ได้รับลงอย่างมหาศาลชั่วขณะ",
+          en: "Infuses the katana with the sacred power of Yang, generating bonus Yang points with every successful strike and dealing heightened damage.",
+          th: "ผสานพลังหยางอันศักดิ์สิทธิ์เข้าสู่ตัวดาบ ทุกครั้งที่ฟันโดนศัตรูจะช่วยสะสมแต้ม Yang ให้กองทัพเร็วขึ้นพร้อมเพิ่มพลังโจมตี",
         },
+        duration: { en: "Drains stamina continuously", th: "เผาผลาญ Stamina ต่อเนื่องขณะเปิดใช้งาน" },
       },
       {
-        name: { en: "Dragon's Breath", th: "ลมหายใจมังกร" },
-        building: { en: "Fireworks Factory", th: "Fireworks Factory" },
-        type: "Offensive",
+        name: { en: "Dragon Skin", th: "เกราะผิวมังกรคุ้มกาย" },
+        type: "Toggle",
         effect: {
-          en: "Breathes a devastating cone of fire that scorches clusters of enemies and structures.",
-          th: "พ่นเปลวเพลิงรูปกรวยด้านหน้า เผาผลาญศัตรูกลุ่มใหญ่และสิ่งก่อสร้าง",
+          en: "Harnesses mystical martial concentration to render the Samurai completely immune to all missile and ranged projectile damage.",
+          th: "รวบรวมสมาธิเปลี่ยนเกราะเหล็กให้กลายเป็นผิวมังกร ทำให้ป้องกันและไม่ได้รับความเสียหายจากการโจมตีระยะไกลทุกชนิด 100%",
         },
+        duration: { en: "Drains stamina continuously", th: "เผาผลาญ Stamina ต่อเนื่องขณะเปิดใช้งาน" },
       },
     ],
     description: {
-      en: "The pinnacle of Dragon military power. Sacrifices itself to empower nearby allies upon death.",
-      th: "ขุมกำลังสูงสุดของ Dragon ฟันรุนแรง และเมื่อตายจะมอบบัฟขวัญกำลังใจให้กองทัพ",
+      en: "The pinnacle of Dragon Clan martial discipline. Honored warriors who fight with extreme precision, sacrificing their life upon death to release a spirit that buffs nearby allies.",
+      th: "ขุมกำลังสูงสุดของตระกูลมังกร ฟันดาบด้วยความแม่นยำและรุนแรง เมื่อตายจะปล่อยดวงจิตมอบบัฟเพิ่มพลังใจให้กองทัพ",
     },
   },
   {
     id: "dragon_geisha",
     name: { en: "Geisha", th: "เกอิชา (Geisha)" },
-    tier: "Support",
-    role: { en: "Healer", th: "ยูนิตฟื้นฟูพลังชีวิต" },
+    tier: "Support Healer",
+    role: { en: "Combat Medic & Yang Sustainer", th: "หมอรักษาพยาบาล & สะสมแต้มหยาง" },
     clan: "Dragon",
     dmgType: "Magic",
     armorType: "Unarmored",
     trainingPath: [{ en: "Bathhouse", th: "โรงอาบน้ำ (Bathhouse)" }],
-    gears: [],
+    gears: [
+      {
+        name: { en: "Sacrifice", th: "มหาเวทสละชีพฟื้นฟู" },
+        type: "Utility",
+        effect: {
+          en: "Sacrifices the Geisha's physical life to channel pure spiritual light, instantly restoring full health and curing debuffs for all nearby allied units in a wide area.",
+          th: "สละชีวิตตนเองเพื่อปลดปล่อยพลังวิญญาณ ฟื้นฟูพลังชีวิตของเพื่อนร่วมทัพทุกคนในบริเวณใกล้เคียงจนเต็มทันที พร้อมล้างสถานะผิดปกติทั้งหมด",
+        },
+        duration: { en: "Instant 100% mass heal (unit dies)", th: "ฮีลเพื่อนรอบตัวเต็ม 100% ทันที (ผู้ใช้จะเสียชีวิต)" },
+      },
+      {
+        name: { en: "Fire Shield", th: "ม่านเพลิงคุ้มกาย" },
+        type: "Toggle",
+        effect: {
+          en: "Projects a rotating sphere of intense flame around her body that burns and damages all enemy melee attackers who get close.",
+          th: "สร้างม่านเปลวเพลิงหมุนวนรอบตัว เผาผลาญและสร้างความเสียหายไฟต่อเนื่องแก่ศัตรูระยะประชิดที่เข้ามาโจมตี",
+        },
+        duration: { en: "Drains stamina continuously", th: "เผาผลาญ Stamina ต่อเนื่องขณะเปิดใช้งาน" },
+      },
+    ],
     description: {
-      en: "Essential support unit that sustains combatants and accelerates Yang point generation through prolonged battles.",
-      th: "ยูนิตสนับสนุนที่ขาดไม่ได้ คอยเติมเลือดรักษาทหารและช่วยเร่งการฟาร์มแต้ม Yang",
+      en: "Graceful healers skilled in the gentler arts, sustaining soldiers on the battlefield and generating Yang points during combat.",
+      th: "ยูนิตสนับสนุนที่ขาดไม่ได้ คอยเติมเลือดรักษาทหาร ช่วยเร่งการฟาร์มแต้ม Yang และมีเวทสละชีพพลิกสถานการณ์สงคราม",
+    },
+  },
+  {
+    id: "dragon_guardian",
+    name: { en: "Guardian", th: "การ์เดียน (Guardian)" },
+    tier: "Tier 3 Heavy Juggernaut (WotW)",
+    role: { en: "Colossal Frontline Tank", th: "สุดยอดทหารแทงก์ร่างยักษ์" },
+    clan: "Dragon",
+    dmgType: "Blunt",
+    armorType: "Heavy",
+    trainingPath: [{ en: "Monastery", th: "อาราม (Monastery)" }],
+    gears: [
+      {
+        name: { en: "Last Stand", th: "คลั่งสู้หยดสุดท้าย" },
+        type: "Passive",
+        effect: {
+          en: "When fatally wounded, enters an unstoppable berserk rage for a short duration, becoming completely impervious to all damage and dealing increased attack damage before dying.",
+          th: "เมื่อพลังชีวิตหมดลง จะเข้าสู่สถานะคลั่งไร้เทียมทานชั่วขณะ โดยเป็นอมตะต่อความเสียหายทุกชนิดและโจมตีแรงขึ้นอย่างมากก่อนจะสิ้นชีพ",
+        },
+        duration: { en: "Invulnerable rage for ~5s", th: "อมตะและคลั่งเป็นเวลาประมาณ 5 วินาที" },
+      },
+      {
+        name: { en: "Concussion Smash", th: "ทุบพื้นสะเทือนปฐพี" },
+        type: "Offensive",
+        effect: {
+          en: "Slams his explosive-runed club into the ground, detonating shockwaves that damage and heavily stun all nearby enemy units at the expense of some of his own health.",
+          th: "ฟาดกระบองสลักอักขระระเบิดลงพื้น สร้างคลื่นกระแทกทำดาเมจและสตั้นศัตรูรอบตัวเป็นวงกว้าง (แลกด้วยพลังชีวิตของผู้ใช้ส่วนหนึ่ง)",
+        },
+        duration: { en: "AoE stun for ~4s", th: "สตั้นศัตรูรอบตัวนานประมาณ 4 วินาที" },
+      },
+    ],
+    description: {
+      en: "A hulking warrior possessing devastating blunt strength and rune-carved clubs, holding the frontline to the bitter end with his legendary Last Stand.",
+      th: "ยูนิตเกราะหนักร่างยักษ์จากภาค Winter of the Wolf ทุบทำลายแนวรบศัตรูด้วยกระบองอักขระ และมีสกิลคลั่งเป็นอมตะก่อนตาย",
+    },
+  },
+  {
+    id: "dragon_battle_maiden",
+    name: { en: "Battle Maiden", th: "แบทเทิลไมเดน (Battle Maiden)" },
+    tier: "Tier 2 Hybrid (WotW)",
+    role: { en: "Tactical Infiltrator & Siphoner", th: "นักรบหญิงมนตราแยกร่าง & สูบพลังหอคอย" },
+    clan: "Dragon",
+    dmgType: "Magic",
+    armorType: "Medium",
+    trainingPath: [
+      { en: "Bathhouse", th: "โรงอาบน้ำ (Bathhouse)" },
+      { en: "Dojo", th: "โรงดาบ (Dojo)" },
+    ],
+    gears: [
+      {
+        name: { en: "Double Image", th: "วิชากระจกแยกร่าง" },
+        type: "Utility",
+        effect: {
+          en: "Splits into two transparent mirror images that can be commanded independently, dealing 50% damage. When one dies, the survivor reverts to normal form.",
+          th: "แยกร่างเงาออกเป็น 2 ร่างที่สามารถบังคับแยกกันได้ (สร้างดาเมจ 50%) หากร่างเงาใดร่างหนึ่งตาย ร่างที่เหลือจะกลับคืนสภาพเดิม",
+        },
+        duration: { en: "Active until clone dies", th: "อยู่จนกว่าร่างเงาจะตายหรือหมดเวลา" },
+      },
+      {
+        name: { en: "Blazing Purity", th: "สูบพลังหอคอยเสริมแกร่ง" },
+        type: "Toggle",
+        effect: {
+          en: "Channels energy while standing still to sap magical defenses from enemy watchtowers and transfer the power to nearby allies as a bonus damage buff.",
+          th: "ยืนร่ายเพื่อดูดซับพลังเวทจากหอคอยศัตรู แล้วถ่ายทอดเป็นบัฟเพิ่มพลังโจมตีให้เพื่อนร่วมทัพรอบตัว",
+        },
+        duration: { en: "Drains stamina while channeling", th: "เผาผลาญ Stamina ต่อเนื่องขณะยืนร่าย" },
+      },
+    ],
+    description: {
+      en: "An elite warrior maiden adept in illusionary martial arts and disrupting enemy tower fortifications.",
+      th: "นักรบหญิงสายมนตรา แยกเงาลวงตาข้าศึกและสามารถตัดตอนพลังเวทของป้อมปราการศัตรูได้อย่างแยบยล",
+    },
+  },
+  {
+    id: "zen_kenji",
+    name: { en: "Kenji Oja", th: "เคนจิ โอจา (Kenji Oja)" },
+    tier: "Zen Master / Hero",
+    role: { en: "Dragon Heir & Master Swordsman", th: "ทายาทตระกูลมังกร & ปรมาจารย์เพลงดาบ" },
+    clan: "Dragon",
+    dmgType: "Cutting",
+    armorType: "Medium",
+    trainingPath: [{ en: "Keep / Fortress", th: "ป้อมปราการ (Keep)" }],
+    gears: [
+      {
+        name: { en: "Dragon's Spirit", th: "จิตวิญญาณมังกรศักดิ์สิทธิ์" },
+        type: "Passive",
+        effect: {
+          en: "Innate hero mastery. After completing lethal sword combos, Kenji inspires nearby allies to fight harder. In his awakened form, he gains extreme HP and damage resistances.",
+          th: "ความสามารถประจำตัว เมื่อออกคอมโบเพลงดาบสำเร็จจะสร้างขวัญกำลังใจเพิ่มพลังให้ทหารรอบตัว และเมื่อได้รับพลังจิตวิญญาณมังกรจะมีเลือดและความทนทานสูงยิ่งยวด",
+        },
+        duration: { en: "Permanent passive hero aura", th: "ความสามารถติดตัวตลอดเวลา" },
+      },
+    ],
+    description: {
+      en: "The protagonist and leader of the Dragon Clan. Masters quickdraw katana strikes, pistol marksmanship, and inspires his warriors to glorious victory.",
+      th: "ผู้นำสูงสุดของตระกูลมังกร เชี่ยวชาญเพลงดาบตัดสลับปืนสั้น และเป็นศูนย์รวมจิตใจของเหล่านักรบมังกรทุกคน",
+    },
+  },
+  {
+    id: "zen_otomo",
+    name: { en: "Otomo", th: "โอโตโมะ (Otomo)" },
+    tier: "Zen Master",
+    role: { en: "Loyal General & Army Commander", th: "แม่ทัพผู้ภักดี & ปลุกขวัญกองทัพ" },
+    clan: "Dragon",
+    dmgType: "Cutting",
+    armorType: "Heavy",
+    trainingPath: [{ en: "Keep / Fortress", th: "ป้อมปราการ (Keep)" }],
+    gears: [
+      {
+        name: { en: "Battle Cry", th: "เสียงกู่ร้องแห่งศึก" },
+        type: "Utility",
+        effect: {
+          en: "Unleashes a thunderous battle roar, increasing the attack power of himself and surrounding allied units by 20% for a duration.",
+          th: "เปล่งเสียงคำรามปลุกใจศึก เพิ่มพลังโจมตีของตัวเองและเพื่อนทหารรอบตัวขึ้น 20% นาน 15-20 วินาที",
+        },
+        duration: { en: "Buff lasts ~15-20s", th: "เพิ่มพลังโจมตีนาน 15-20 วินาที" },
+      },
+    ],
+    description: {
+      en: "Kenji's steadfast mentor and commander, embodying unwavering loyalty and inspiring all Dragon warriors to fight with redoubled fury.",
+      th: "แม่ทัพคู่ใจของเคนจิ เปี่ยมด้วยเกียรติยศและความซื่อสัตย์ เสียงคำรามของเขาสามารถพลิกแนวรบให้บุกตะลุยได้อย่างฮึกเหิม",
+    },
+  },
+  {
+    id: "zen_kazan",
+    name: { en: "Kazan", th: "คาซาน (Kazan)" },
+    tier: "Zen Master",
+    role: { en: "Gourmand Monk & Fire Brawler", th: "พระนักสู้หมัดเมา & พ่นเพลิงพิฆาต" },
+    clan: "Dragon",
+    dmgType: "Blunt",
+    armorType: "Medium",
+    trainingPath: [{ en: "Keep / Fortress", th: "ป้อมปราการ (Keep)" }],
+    gears: [
+      {
+        name: { en: "Flame Breath", th: "ลมหายใจเพลิงสุรา" },
+        type: "Offensive",
+        effect: {
+          en: "Takes a swig of potent flammable sake and spits it through a flame, scorching melee enemies and structures with intense continuous fire.",
+          th: "ดื่มสุราแรงสูงแล้วพ่นไฟเผาผลาญศัตรูระยะประชิดและสิ่งก่อสร้างอย่างรุนแรง",
+        },
+        duration: { en: "Instant spray with lingering burn", th: "พ่นไฟเผาไหม้เป้าหมายทันทีพร้อมดาเมจไฟตกค้าง" },
+      },
+    ],
+    description: {
+      en: "A jovial monk with immense physical strength and a love for fine spirits, turning his fiery brew into a terrifying weapon on the battlefield.",
+      th: "พระนักสู้ผู้รักสุราและการกิน ร่างกายกำยำทนทาน สามารถพ่นไฟจากเหล้าเผาศัตรูและสิ่งปลูกสร้างให้มอดไหม้",
+    },
+  },
+  {
+    id: "zen_arah",
+    name: { en: "Arah", th: "อาราห์ (Arah)" },
+    tier: "Zen Master",
+    role: { en: "Master Sniper & Grand Scout", th: "สุดยอดพลซุ่มยิง & ส่องตรวจการณ์ข้ามพิกัด" },
+    clan: "Dragon",
+    dmgType: "Piercing",
+    armorType: "Light",
+    trainingPath: [{ en: "Keep / Fortress", th: "ป้อมปราการ (Keep)" }],
+    gears: [
+      {
+        name: { en: "Sight Beyond Sight", th: "เนตรทิพย์ส่องนภา" },
+        type: "Utility",
+        effect: {
+          en: "Shoots a mind-linked arrow across vast distances, enabling Arah to glimpse distant landscape and sniper-target enemies far outside standard vision range.",
+          th: "ยิงลูกศรเชื่อมจิตระยะไกล เปิดหมอกส่องพื้นที่และช่วยให้ซุ่มยิงศัตรูได้จากระยะไกลลิบเกินสายตาปกติ",
+        },
+        duration: { en: "Reveals terrain for ~15s", th: "เปิดวิสัยทัศน์ระยะไกลนาน 15 วินาที" },
+      },
+    ],
+    description: {
+      en: "The realm's premier Dragon archer whose shots never miss and whose heightened senses reveal concealed enemies far across the battlefield.",
+      th: "สุดยอดพลแม่นปืนธนูของตระกูลมังกร ยิงศัตรูได้จากระยะไกลลิบและใช้เนตรทิพย์เปิดแผนที่หาตำแหน่งศัตรู",
+    },
+  },
+  {
+    id: "zen_tao",
+    name: { en: "Tao", th: "เต๋า (Tao)" },
+    tier: "Zen Master",
+    role: { en: "Balance Monk & Damage Reflector", th: "นักพรตแห่งสมดุล & สะท้อนความเสียหาย" },
+    clan: "Dragon",
+    dmgType: "Blunt",
+    armorType: "Medium",
+    trainingPath: [{ en: "Keep / Fortress", th: "ป้อมปราการ (Keep)" }],
+    gears: [
+      {
+        name: { en: "Reversal of Fortune", th: "สมดุลกรรมสะท้อนกลับ" },
+        type: "Toggle",
+        effect: {
+          en: "Taps into the universal cosmic balance, returning a portion of all incoming damage back to the attacker as pure recoil harm.",
+          th: "ปรับสมดุลพลังจักรวาล สะท้อนความเสียหายส่วนหนึ่งที่ได้รับกลับไปยังผู้โจมตีทันที",
+        },
+        duration: { en: "Drains stamina while active", th: "เผาผลาญ Stamina ต่อเนื่องขณะเปิดใช้งาน" },
+      },
+    ],
+    description: {
+      en: "A philosophical monk living in harmony with Yin and Yang, turning enemy aggression against themselves through spiritual reflection.",
+      th: "นักพรตผู้เข้าใจในสัจธรรมแห่งหยินหยาง ใช้กระบองคู่กายและมนตราสะท้อนพลังโจมตีคืนใส่ผู้ที่คิดร้าย",
+    },
+  },
+  {
+    id: "zen_teppo",
+    name: { en: "Teppo", th: "เทปโปะ (Teppo)" },
+    tier: "Zen Master (WotW)",
+    role: { en: "Pyrotechnic Engineer & Anti-Magic Defender", th: "วิศวกรปืนใหญ่ & โล่ต้านเวทมนตร์" },
+    clan: "Dragon",
+    dmgType: "Explosive",
+    armorType: "Heavy",
+    trainingPath: [{ en: "Keep / Fortress", th: "ป้อมปราการ (Keep)" }],
+    gears: [
+      {
+        name: { en: "Magic Negation", th: "ม่านพลังสลายเวทมนตร์" },
+        type: "Toggle",
+        effect: {
+          en: "Generates a powerful anti-magic barrier that renders Teppo completely immune to all enemy magical damage and spell effects.",
+          th: "กางม่านพลังพิเศษต้านเวท ทำให้เทปโปะไม่ได้รับผลกระทบหรือความเสียหายจากเวทมนตร์ทุกชนิด 100%",
+        },
+        duration: { en: "Drains stamina while active", th: "เผาผลาญ Stamina ต่อเนื่องขณะเปิดใช้งาน" },
+      },
+    ],
+    description: {
+      en: "A master mechanic and pyrotechnician equipped with explosive rocket packs and anti-magic shielding technology.",
+      th: "ปรมาจารย์ด้านดินปืนและดอกไม้ไฟ แบกแท่นยิงจรวดคู่หลังและมีเกราะป้องกันเวทมนตร์ชั้นสูง",
+    },
+  },
+  {
+    id: "zen_garrin",
+    name: { en: "Garrin", th: "การ์ริน (Garrin)" },
+    tier: "Zen Master",
+    role: { en: "Master of Steeds & Cavalry Commander", th: "เจ้าแห่งอาชา & แม่ทัพทหารม้า" },
+    clan: "Dragon",
+    dmgType: "Piercing",
+    armorType: "Medium",
+    trainingPath: [{ en: "Keep / Fortress", th: "ป้อมปราการ (Keep)" }],
+    gears: [
+      {
+        name: { en: "Call Horse", th: "ผิวปากเรียกม้าป่า" },
+        type: "Utility",
+        effect: {
+          en: "Whistles to instantly summon the nearest free wild horse to his location, enabling instant mounting with massive cavalry attack bonuses.",
+          th: "ผิวปากเรียกม้าป่าที่อยู่ใกล้ที่สุดให้วิ่งมาหาทันที เพื่อให้ตนเองหรือเพื่อนร่วมทัพขึ้นขี่ได้ทันใจ พร้อมมอบโบนัสพลังโจมตีบนหลังม้าอย่างมหาศาล",
+        },
+        duration: { en: "Instant horse summon", th: "เรียกม้ามายังตำแหน่งทันที" },
+      },
+    ],
+    description: {
+      en: "A legendary horseman whose kinship with wild steeds allows him to summon horses across the battlefield without needing stables.",
+      th: "ยอดนักขี่ม้าแห่งแผ่นดิน สามารถเรียกม้าป่ามาช่วยรบได้ทุกที่และเพิ่มพลังการโจมตีบนหลังม้าให้สูงเป็นพิเศษ",
     },
   },
 

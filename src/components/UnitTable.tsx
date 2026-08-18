@@ -13,6 +13,7 @@ import {
   Building2,
   Sparkles,
   User,
+  Clock,
 } from "lucide-react";
 import type { ClanData, DamageType, ArmorType, UnitData } from "@/data/battleRealmsData";
 import {
@@ -318,50 +319,53 @@ function UnitCard({ unit }: { unit: UnitData }) {
                 </span>
               </div>
               <div className="flex flex-col gap-2.5">
-                {unit.gears.map((gear, i) => (
-                  <div
-                    key={i}
-                    className="bg-amber-950/25 border border-amber-800/40 rounded-xl p-3.5 hover:bg-amber-950/40 transition-colors"
-                  >
-                    {/* Gear name row — 36px icon + name + type badge */}
-                    <div className="flex items-center gap-3 mb-2">
-                      <GearIcon gearNameEn={gear.name.en} size={36} />
-                      <div className="flex-1 min-w-0">
-                        <span className="text-base font-bold text-amber-300 leading-tight block">
-                          {t(gear.name)}
+                {unit.gears.map((gear, i) => {
+                  const typeStyles: Record<string, string> = {
+                    Offensive: "border-red-700/50 text-red-400 bg-red-950/40",
+                    Defensive: "border-blue-700/50 text-blue-400 bg-blue-950/40",
+                    Utility: "border-emerald-700/50 text-emerald-400 bg-emerald-950/40",
+                    Passive: "border-purple-700/50 text-purple-400 bg-purple-950/40",
+                    Toggle: "border-amber-700/50 text-amber-400 bg-amber-950/40",
+                    Initiate: "border-cyan-700/50 text-cyan-400 bg-cyan-950/40",
+                  };
+
+                  return (
+                    <div
+                      key={i}
+                      className="bg-amber-950/25 border border-amber-800/40 rounded-xl p-3.5 hover:bg-amber-950/40 transition-colors"
+                    >
+                      {/* Gear name row — 36px icon + name + type badge */}
+                      <div className="flex items-center gap-3 mb-2">
+                        <GearIcon gearNameEn={gear.name.en} size={36} />
+                        <div className="flex-1 min-w-0">
+                          <span className="text-base font-bold text-amber-300 leading-tight block">
+                            {t(gear.name)}
+                          </span>
+                        </div>
+                        <span
+                          className={`text-xs font-semibold border rounded-full px-2.5 py-0.5 shrink-0 ${
+                            typeStyles[gear.type] ?? "border-zinc-700 text-zinc-300 bg-zinc-900"
+                          }`}
+                        >
+                          {gear.type}
                         </span>
                       </div>
-                      <span
-                        className={`text-xs font-semibold border rounded-full px-2.5 py-0.5 shrink-0 ${
-                          gear.type === "Offensive"
-                            ? "border-red-700/50 text-red-400 bg-red-950/40"
-                            : gear.type === "Defensive"
-                            ? "border-blue-700/50 text-blue-400 bg-blue-950/40"
-                            : "border-emerald-700/50 text-emerald-400 bg-emerald-950/40"
-                        }`}
-                      >
-                        {gear.type}
-                      </span>
-                    </div>
 
-                    {/* Effect description */}
-                    <p className="text-sm text-zinc-300 leading-relaxed">
-                      {t(gear.effect)}
-                    </p>
+                      {/* Effect description */}
+                      <p className="text-sm text-zinc-300 leading-relaxed">
+                        {t(gear.effect)}
+                      </p>
 
-                    {/* Requires / Train Location (Temporarily disabled due to inaccuracies) ──
-                    <div className="flex items-center gap-2 pt-2 border-t border-amber-800/30">
-                      <BuildingIcon buildingNameEn={gear.building.en} size={24} />
-                      <span className="text-xs text-zinc-400">
-                        {t(UI.unitTable.requires)}{" "}
-                        <span className="text-zinc-200 font-semibold">
-                          {t(gear.building)}
-                        </span>
-                      </span>
+                      {/* Duration / Cooldown if specified */}
+                      {gear.duration && (
+                        <div className="flex items-center gap-1.5 mt-2.5 pt-2 border-t border-amber-800/20 text-xs text-amber-400/90 font-medium">
+                          <Clock className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                          <span>{t(gear.duration)}</span>
+                        </div>
+                      )}
                     </div>
-                    ── */}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
