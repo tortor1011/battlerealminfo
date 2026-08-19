@@ -9,16 +9,21 @@ export type L10nArray = { en: string[]; th: string[] };
 // ─── Stat name lookup ────────────────────────────────────────
 export const STAT_NAMES: Record<string, L10n> = {
   Aggressiveness: { en: "Aggressiveness", th: "ความดุดัน" },
-  Harassment: { en: "Harassment", th: "การป่วนฐาน" },
-  "Battle Gear": { en: "Battle Gear", th: "การใช้สกิล" },
-  Horse: { en: "Horse", th: "การใช้ม้า" },
-  Healer: { en: "Healer", th: "การใช้ตัวฮีล" },
   Cleverness: { en: "Cleverness", th: "ความเจ้าเล่ห์" },
-  Intelligence: { en: "Intelligence", th: "ความฉลาด" },
-  Memory: { en: "Memory", th: "ความจำ" },
-  Attention: { en: "Attention", th: "สมาธิ/การเกาะเป้า" },
   Exploration: { en: "Exploration", th: "การสำรวจ" },
-  Hero: { en: "Hero", th: "การใช้ฮีโร่" },
+  Harassment: { en: "Harassment", th: "การป่วนฐาน" },
+  Intelligence: { en: "Intelligence", th: "ความฉลาด" },
+  "Attention Span": { en: "Attention Span", th: "สมาธิ/การเกาะเป้าหมาย" },
+  "Battle Gear Usage": { en: "Battle Gear Usage", th: "การใช้สกิล" },
+  "Battle Gear": { en: "Battle Gear Usage", th: "การใช้สกิล" },
+  Memory: { en: "Memory", th: "ความจำ" },
+  "Horse Usage": { en: "Horse Usage", th: "การใช้ม้า" },
+  Horse: { en: "Horse Usage", th: "การใช้ม้า" },
+  "Hero Usage": { en: "Hero Usage", th: "การใช้ฮีโร่" },
+  Hero: { en: "Hero Usage", th: "การใช้ฮีโร่" },
+  "Healer Usage": { en: "Healer Usage", th: "การใช้ตัวฮีล" },
+  Healer: { en: "Healer Usage", th: "การใช้ตัวฮีล" },
+  Attention: { en: "Attention Span", th: "สมาธิ/การเกาะเป้าหมาย" },
 };
 
 // ─── Damage & Armor type labels ───────────────────────────────
