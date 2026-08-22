@@ -11,10 +11,12 @@ import {
   ChevronDown,
   GitBranch,
   Flame,
+  Zap,
 } from "lucide-react";
 import BotCard from "@/components/BotCard";
 import UnitTable from "@/components/UnitTable";
 import GameplayGuides from "@/components/GameplayGuides";
+import MatchupCalculator from "@/components/MatchupCalculator";
 import { BOT_PROFILES, TIER_ORDER, ALL_UNITS_DATA } from "@/data/battleRealmsData";
 import type { BotTier } from "@/data/battleRealmsData";
 import { UI } from "@/data/translations";
@@ -22,7 +24,7 @@ import { LanguageProvider, useLang, type Lang } from "@/context/LanguageContext"
 
 // ─── Types ────────────────────────────────────────────────────
 
-type Tab = "bots" | "units" | "guides";
+type Tab = "bots" | "units" | "calculator" | "guides";
 
 // ─── Language Switcher ────────────────────────────────────────
 
@@ -212,6 +214,13 @@ function InnerPage() {
               label={t(UI.nav.units)}
             />
             <TabButton
+              tab="calculator"
+              activeTab={activeTab}
+              onClick={() => setActiveTab("calculator")}
+              icon={<Zap className="w-4 h-4" />}
+              label={t(UI.nav.calculator)}
+            />
+            <TabButton
               tab="guides"
               activeTab={activeTab}
               onClick={() => setActiveTab("guides")}
@@ -339,6 +348,9 @@ function InnerPage() {
 
         {/* ── UNITS & GEAR TAB ─────────────────────────────── */}
         {activeTab === "units" && <UnitTable />}
+
+        {/* ── MATCHUP CALCULATOR TAB ──────────────────────── */}
+        {activeTab === "calculator" && <MatchupCalculator />}
 
         {/* ── GUIDES TAB ───────────────────────────────────── */}
         {activeTab === "guides" && <GameplayGuides />}

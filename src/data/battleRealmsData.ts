@@ -2072,3 +2072,142 @@ export const GAMEPLAY_GUIDES: GuideSection[] = [
     formulaLabel: { en: "Combat Effectiveness Formula", th: "สูตรประสิทธิภาพการต่อสู้" },
   },
 ];
+
+// ─── COMBAT STATS & CALCULATION HELPERS (Zen Edition 1.6.0) ───
+
+export interface CombatStats {
+  hp: number;
+  baseDmg: number;
+  attackInterval: number; // in seconds
+  isRanged: boolean;
+}
+
+export const UNIT_COMBAT_DATABASE: Record<string, CombatStats> = {
+  // ─── DRAGON CLAN ──────────────────────────────────────────
+  dragon_peasant:             { hp: 150, baseDmg: 8,  attackInterval: 1.0, isRanged: false },
+  dragon_spearman:            { hp: 360, baseDmg: 28, attackInterval: 0.95, isRanged: false },
+  dragon_archer:              { hp: 280, baseDmg: 32, attackInterval: 1.3, isRanged: true },
+  dragon_chemist:             { hp: 310, baseDmg: 36, attackInterval: 1.4, isRanged: true },
+  dragon_warrior:             { hp: 520, baseDmg: 44, attackInterval: 1.0, isRanged: false },
+  dragon_kabuki_warrior:      { hp: 480, baseDmg: 48, attackInterval: 0.85, isRanged: false }, // Magic vs Heavy: counters Ronin & Samurai
+  dragon_powder_keg_cannoneer:{ hp: 420, baseDmg: 68, attackInterval: 1.6, isRanged: true },
+  dragon_samurai:             { hp: 680, baseDmg: 54, attackInterval: 0.95, isRanged: false },
+  dragon_geisha:              { hp: 250, baseDmg: 12, attackInterval: 1.2, isRanged: false },
+  dragon_guardian:            { hp: 760, baseDmg: 58, attackInterval: 1.1, isRanged: false },
+  dragon_battle_maiden:       { hp: 460, baseDmg: 42, attackInterval: 0.95, isRanged: false },
+  zen_kenji:                  { hp: 900, baseDmg: 70, attackInterval: 0.9, isRanged: false },
+  zen_otomo:                  { hp: 850, baseDmg: 65, attackInterval: 1.0, isRanged: false },
+  zen_kazan:                  { hp: 950, baseDmg: 72, attackInterval: 1.2, isRanged: false },
+  zen_arah:                   { hp: 650, baseDmg: 64, attackInterval: 1.2, isRanged: true },
+  zen_tao:                    { hp: 800, baseDmg: 62, attackInterval: 0.95, isRanged: false },
+  zen_teppo:                  { hp: 820, baseDmg: 68, attackInterval: 1.3, isRanged: true },
+  zen_garrin:                 { hp: 850, baseDmg: 66, attackInterval: 0.95, isRanged: false },
+
+  // ─── SERPENT CLAN ─────────────────────────────────────────
+  serpent_peasant:            { hp: 150, baseDmg: 8,  attackInterval: 1.0, isRanged: false },
+  serpent_swordsman:          { hp: 340, baseDmg: 26, attackInterval: 0.95, isRanged: false },
+  serpent_crossbowman:        { hp: 290, baseDmg: 34, attackInterval: 1.4, isRanged: true },
+  serpent_musketeer:          { hp: 310, baseDmg: 38, attackInterval: 1.5, isRanged: true },
+  serpent_raider:             { hp: 360, baseDmg: 32, attackInterval: 1.0, isRanged: false },
+  serpent_bandit:             { hp: 340, baseDmg: 28, attackInterval: 0.9, isRanged: false },
+  serpent_slasher:            { hp: 500, baseDmg: 44, attackInterval: 0.95, isRanged: false },
+  serpent_cannoneer:          { hp: 420, baseDmg: 68, attackInterval: 1.6, isRanged: true },
+  serpent_ronin:              { hp: 660, baseDmg: 52, attackInterval: 1.0, isRanged: false },
+  serpent_fan_geisha:         { hp: 250, baseDmg: 12, attackInterval: 1.2, isRanged: false },
+  serpent_enforcer:           { hp: 720, baseDmg: 56, attackInterval: 1.05, isRanged: false },
+  serpent_witch:              { hp: 440, baseDmg: 42, attackInterval: 1.1, isRanged: true },
+  zen_shinja:                 { hp: 850, baseDmg: 68, attackInterval: 0.95, isRanged: false },
+  zen_vetkin:                 { hp: 800, baseDmg: 62, attackInterval: 0.85, isRanged: false },
+  zen_budo:                   { hp: 1000, baseDmg: 68, attackInterval: 1.2, isRanged: false },
+  zen_utok:                   { hp: 950, baseDmg: 72, attackInterval: 1.1, isRanged: false },
+  zen_necromancer:            { hp: 750, baseDmg: 65, attackInterval: 1.2, isRanged: true },
+
+  // ─── LOTUS CLAN ───────────────────────────────────────────
+  lotus_peasant:              { hp: 150, baseDmg: 8,  attackInterval: 1.0, isRanged: false },
+  lotus_blade_acolyte:        { hp: 340, baseDmg: 28, attackInterval: 0.95, isRanged: false },
+  lotus_staff_adept:          { hp: 340, baseDmg: 26, attackInterval: 1.0, isRanged: false },
+  lotus_root_acolyte:         { hp: 310, baseDmg: 30, attackInterval: 1.2, isRanged: false },
+  lotus_infested_one:         { hp: 480, baseDmg: 44, attackInterval: 1.2, isRanged: false },
+  lotus_diseased_one:         { hp: 460, baseDmg: 40, attackInterval: 1.1, isRanged: false },
+  lotus_unclean_one:          { hp: 500, baseDmg: 48, attackInterval: 1.1, isRanged: true }, // Corrosive Magic vs Heavy
+  lotus_warlock:              { hp: 520, baseDmg: 62, attackInterval: 1.3, isRanged: true },
+  lotus_master_bowman:        { hp: 450, baseDmg: 50, attackInterval: 1.35, isRanged: true },
+  lotus_channeler:            { hp: 250, baseDmg: 14, attackInterval: 1.2, isRanged: false },
+  lotus_brother_lyde:         { hp: 620, baseDmg: 55, attackInterval: 1.0, isRanged: false },
+  lotus_brother_seito:        { hp: 600, baseDmg: 52, attackInterval: 0.95, isRanged: false },
+  lotus_brother_tausen:       { hp: 640, baseDmg: 56, attackInterval: 1.05, isRanged: false },
+  zen_zymeth:                 { hp: 850, baseDmg: 75, attackInterval: 1.1, isRanged: true },
+  zen_koril:                  { hp: 800, baseDmg: 66, attackInterval: 0.95, isRanged: false },
+  zen_issyl:                  { hp: 780, baseDmg: 64, attackInterval: 1.0, isRanged: false },
+  zen_sobek:                  { hp: 950, baseDmg: 74, attackInterval: 1.1, isRanged: false },
+  zen_yvaine:                 { hp: 780, baseDmg: 68, attackInterval: 1.1, isRanged: true },
+
+  // ─── WOLF CLAN ────────────────────────────────────────────
+  wolf_peasant:               { hp: 160, baseDmg: 9,  attackInterval: 1.0, isRanged: false },
+  wolf_brawler:               { hp: 380, baseDmg: 26, attackInterval: 0.85, isRanged: false },
+  wolf_hurler:                { hp: 310, baseDmg: 32, attackInterval: 1.35, isRanged: true },
+  wolf_sledger:               { hp: 400, baseDmg: 34, attackInterval: 1.1, isRanged: false },
+  wolf_digger:                { hp: 420, baseDmg: 36, attackInterval: 0.95, isRanged: false },
+  wolf_pitch_slinger:         { hp: 440, baseDmg: 42, attackInterval: 1.4, isRanged: true },
+  wolf_ballistaman:           { hp: 450, baseDmg: 55, attackInterval: 1.6, isRanged: true },
+  wolf_mauler:                { hp: 550, baseDmg: 46, attackInterval: 1.0, isRanged: false }, // Heavy Blunt, demolishes heavy armor
+  wolf_berserker:             { hp: 700, baseDmg: 60, attackInterval: 0.95, isRanged: false },
+  wolf_druidess:              { hp: 280, baseDmg: 18, attackInterval: 1.2, isRanged: false },
+  wolf_werewolf:              { hp: 780, baseDmg: 68, attackInterval: 0.85, isRanged: false },
+  wolf_pack_master:           { hp: 420, baseDmg: 34, attackInterval: 1.0, isRanged: false },
+  wolf_shale_lord:            { hp: 850, baseDmg: 66, attackInterval: 1.15, isRanged: false },
+  wolf_dryad:                 { hp: 300, baseDmg: 16, attackInterval: 1.2, isRanged: false },
+  wolf_grayback:              { hp: 950, baseDmg: 72, attackInterval: 0.95, isRanged: false },
+  wolf_longtooth:             { hp: 820, baseDmg: 65, attackInterval: 0.85, isRanged: false },
+  wolf_wildeye:               { hp: 880, baseDmg: 66, attackInterval: 0.95, isRanged: false },
+  wolf_gaihla:                { hp: 780, baseDmg: 55, attackInterval: 1.1, isRanged: false },
+};
+
+export function getUnitCombatStats(unit: UnitData): CombatStats {
+  const directMatch = UNIT_COMBAT_DATABASE[unit.id];
+  if (directMatch) return directMatch;
+
+  const id = unit.id.toLowerCase();
+  for (const key of Object.keys(UNIT_COMBAT_DATABASE)) {
+    if (id.includes(key) || key.includes(id)) {
+      return UNIT_COMBAT_DATABASE[key];
+    }
+  }
+
+  const tier = unit.tier.toLowerCase();
+  if (tier.includes("hero") || tier.includes("zen")) {
+    return { hp: 900, baseDmg: 65, attackInterval: 1.0, isRanged: false };
+  }
+  if (tier.includes("tier 3") || tier.includes("master")) {
+    return { hp: 660, baseDmg: 54, attackInterval: 1.1, isRanged: false };
+  }
+  if (tier.includes("tier 2")) {
+    return { hp: 480, baseDmg: 40, attackInterval: 1.1, isRanged: tier.includes("range") || tier.includes("siege") };
+  }
+  if (tier.includes("tier 1")) {
+    return { hp: 340, baseDmg: 26, attackInterval: 1.1, isRanged: tier.includes("range") };
+  }
+  return { hp: 350, baseDmg: 25, attackInterval: 1.1, isRanged: false };
+}
+
+export function calculateEffectiveDamage(
+  attackerDmgType: DamageType,
+  targetArmorType: ArmorType,
+  attackerBaseDmg: number,
+  isTargetWolfShaleArmor: boolean = false
+): { multiplier: number; effectiveDmg: number } {
+  const baseMultiplier = DAMAGE_MATCHUP[attackerDmgType]?.[targetArmorType] ?? 1.0;
+  // If target has Wolf Shale Armor, reduce incoming damage (75% for physical/fire/explosive, 50% for magic)
+  let shaleMultiplier = 1.0;
+  if (isTargetWolfShaleArmor) {
+    shaleMultiplier = attackerDmgType === "Magic" ? 0.50 : 0.75;
+  }
+  const finalMultiplier = baseMultiplier * shaleMultiplier;
+  const effectiveDmg = Math.round(attackerBaseDmg * finalMultiplier);
+  return {
+    multiplier: baseMultiplier,
+    effectiveDmg: Math.max(1, effectiveDmg),
+  };
+}
+
+
