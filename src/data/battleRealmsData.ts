@@ -1161,10 +1161,25 @@ export const ALL_UNITS_DATA: UnitData[] = [
 
   // ==================== SERPENT CLAN ====================
   {
+    id: "serpent_peasant",
+    name: { en: "Peasant (Serpent)", th: "ชาวบ้าน (Serpent)" },
+    tier: "Tier 0 Worker",
+    role: { en: "Resource Gatherer & Trainer", th: "เก็บเกี่ยวทรัพยากร & ฐานฝึกทหาร" },
+    clan: "Serpent",
+    dmgType: "Piercing",
+    armorType: "Unarmored",
+    trainingPath: [{ en: "Peasant Hut", th: "กระท่อมชาวนา (Peasant Hut)" }],
+    gears: [],
+    description: {
+      en: "The Serpent Clan's workforce. Harvests rice and water, fights fires, and enters the Tavern or other buildings to train into combat units.",
+      th: "กำลังแรงงานของเผ่างู เก็บเกี่ยวข้าวและน้ำ ดับไฟ และเข้า Tavern เพื่อฝึกเป็นนักรบสไตล์กองโจรของเผ่างู",
+    },
+  },
+  {
     id: "serpent_swordsman",
     name: { en: "Swordsman", th: "นักดาบ (Swordsman)" },
     tier: "Tier 1 Melee",
-    role: { en: "Light Infantry", th: "พลดาบจู่โจมเร็ว" },
+    role: { en: "Light Infantry Raider", th: "พลดาบจู่โจมเร็ว & ฉกทรัพยากร" },
     clan: "Serpent",
     dmgType: "Cutting",
     armorType: "Light",
@@ -1175,23 +1190,23 @@ export const ALL_UNITS_DATA: UnitData[] = [
         building: { en: "Thieves Guild", th: "Thieves Guild" },
         type: "Utility",
         effect: {
-          en: "Steals rice or water directly from enemy peasants upon striking them.",
-          th: "ฟันแย่งชิงข้าวหรือน้ำจากชาวบ้านศัตรูทันทีเมื่อโจมตี",
+          en: "Steals rice or water directly from enemy peasants upon striking them, funneling resources back to the Serpent economy.",
+          th: "ฟันแย่งชิงข้าวหรือน้ำจากชาวบ้านศัตรูทันทีเมื่อโจมตี ส่งทรัพยากรกลับมายังเศรษฐกิจของเผ่างู",
         },
       },
       {
         name: { en: "Glass Sword", th: "ดาบแก้วพิฆาต" },
-        building: { en: "Metalworks", th: "Metalworks" },
+        building: { en: "Metal Shop", th: "Metal Shop" },
         type: "Offensive",
         effect: {
-          en: "Deals massive instant damage on the next strike but damages the sword.",
-          th: "ปลดปล่อยดาเมจฟันมหาศาลในการโจมตีครั้งเดียว",
+          en: "Charges up and delivers a single devastating blow dealing massive burst damage — but shatters the blade on impact, reducing attack power afterward.",
+          th: "สะสมพลังแล้วฟันครั้งเดียวด้วยดาเมจมหาศาล — แต่ดาบแตกหักหลังจากนั้น ลดพลังโจมตีลง",
         },
       },
     ],
     description: {
-      en: "Cheap and fast frontline raider capable of stealing enemy resources early on.",
-      th: "ทหารราบราคาถูก คล่องตัว และสามารถตัดทอนเศรษฐกิจศัตรูได้ตั้งแต่ต้นเกม",
+      en: "The backbone of Serpent early aggression. Cheap, fast, and sneaky — perfect for raiding enemy peasants and stealing resources while the main army builds up.",
+      th: "กำลังหลักของการบุกต้นเกมของเผ่างู ราคาถูก คล่องตัว และแอบเงียบ — เหมาะสำหรับบุกชิงทรัพยากรจากชาวบ้านศัตรูขณะที่กองทัพยังสร้าง",
     },
   },
   {
@@ -1209,14 +1224,49 @@ export const ALL_UNITS_DATA: UnitData[] = [
         building: { en: "Alchemist Hut", th: "Alchemist Hut" },
         type: "Offensive",
         effect: {
-          en: "Shoots fiery bolts that ignite targets and deal damage over time.",
-          th: "ยิงลูกดอกอาบสารเคมีติดไฟ เผาไหม้เป้าหมายต่อเนื่อง",
+          en: "Dips crossbow bolts in phosphorus solution — bolts ignite on impact, dealing continuous Fire damage and setting wooden structures ablaze.",
+          th: "จุ่มลูกดอกในสารฟอสฟอรัส ลูกดอกลุกไหม้เมื่อกระทบ สร้างความเสียหายไฟต่อเนื่องและเผาสิ่งก่อสร้างไม้",
         },
       },
     ],
     description: {
-      en: "Heavy ranged damage dealer with higher penetration than standard archers.",
-      th: "พลยิงระยะไกลที่มีพลังทำลายทะลวงเกราะสูงกว่าพลธนูทั่วไป",
+      en: "Reliable Tier-1 ranged unit with armor-piercing bolts. Slower rate of fire than archers but heavier damage per shot, especially effective against cavalry and light-armored troops.",
+      th: "ยูนิตยิงระยะไกล Tier-1 ที่เชื่อถือได้ ลูกดอกเจาะเกราะ อัตราการยิงช้ากว่าธนูแต่ดาเมจต่อครั้งสูงกว่า ได้เปรียบมากต่อม้าและทหารเกราะเบา",
+    },
+  },
+  {
+    id: "serpent_musketeer",
+    name: { en: "Musketeer", th: "พลปืนคาบศิลา (Musketeer)" },
+    tier: "Tier 1 Ranged / Gunpowder",
+    role: { en: "Accurate Gunpowder Marksman", th: "พลปืนแม่นยำพิสัยกลาง" },
+    clan: "Serpent",
+    dmgType: "Explosive",
+    armorType: "Light",
+    trainingPath: [{ en: "Alchemist Hut", th: "Alchemist Hut" }],
+    gears: [
+      {
+        name: { en: "Blast Shot", th: "กระสุนระเบิด" },
+        building: { en: "Metal Shop", th: "Metal Shop" },
+        type: "Offensive",
+        effect: {
+          en: "The Metal Shop reinforces the musket barrel to fire explosive charges instead of shot. Deals AoE explosive damage and can set buildings on fire — extremely effective against clustered troops and structures.",
+          th: "Metal Shop เสริมลำกล้องปืนให้ยิงกระสุนระเบิดแทนกระสุนธรรมดา สร้างดาเมจระเบิดเป็นวงกว้างและเผาสิ่งก่อสร้าง — ได้ผลมากกับทหารที่ยืนรวมกันและอาคาร",
+        },
+      },
+      {
+        name: { en: "Sniper Scope", th: "กล้องซุ่มยิง" },
+        building: { en: "Thieves Guild", th: "Thieves Guild" },
+        type: "Toggle",
+        effect: {
+          en: "Costly glasswork scopes from the Thieves Guild greatly extend the Musketeer range and change attack type to Piercing — deadly against cavalry. The Musketeer cannot move while in sniper mode.",
+          th: "กล้องแก้วราคาแพงจาก Thieves Guild เพิ่มระยะโจมตีอย่างมากและเปลี่ยนประเภทความเสียหายเป็น Piercing — ร้ายแรงต่อม้า แต่ไม่สามารถเคลื่อนที่ขณะซุ่มยิง",
+        },
+        duration: { en: "Toggle — cannot move while active, changes dmg type to Piercing", th: "เปิด/ปิด — เคลื่อนที่ไม่ได้ขณะเปิด เปลี่ยนดาเมจเป็น Piercing" },
+      },
+    ],
+    description: {
+      en: "The proud Musketeer never misses — their musket normal attack is an instant hit. Blast Shot devastates groups and Sniper Scope makes them lethal at extreme range against cavalry.",
+      th: "Musketeer ผู้หยิ่งทะนงตนไม่เคยพลาดเป้า — การโจมตีปกติเป็น Instant Hit Blast Shot ทำลายล้างกลุ่มทหาร และ Sniper Scope ทำให้ร้ายแรงในระยะสุดลึกโดยเฉพาะต่อม้า",
     },
   },
   {
@@ -1243,15 +1293,217 @@ export const ALL_UNITS_DATA: UnitData[] = [
       },
     ],
     description: {
-      en: "The infamous building burner of Serpent Clan. Terrifying when sent to raid enemy rice paddies.",
-      th: "ราชาแห่งการเผาทำลาย วิ่งลอบเข้าไปจุดไฟเผาแปลงข้าวและทำลายฐานศัตรูได้ไวมาก",
+      en: "The infamous building burner of Serpent Clan. After acquiring Magnesium Torches upgrade, even a single Raider can burn down a building alone. Terrifying when sent to raid enemy rice paddies.",
+      th: "ราชาแห่งการเผาทำลายของเผ่างู เมื่อได้รับอัปเกรด Magnesium Torches แม้แต่ Raider คนเดียวก็สามารถเผาอาคารได้ น่าหวาดกลัวมากเมื่อส่งไปบุกแปลงข้าวศัตรู",
+    },
+  },
+  {
+    id: "serpent_bandit",
+    name: { en: "Bandit", th: "โจรกบดาน (Bandit)" },
+    tier: "Tier 2 Scout / Assassin",
+    role: { en: "Stealthy Guerrilla & Assassin", th: "โจรกบดานสายซุ่มโจมตี" },
+    clan: "Serpent",
+    dmgType: "Cutting",
+    armorType: "Medium",
+    trainingPath: [
+      { en: "Tavern", th: "Tavern" },
+      { en: "Sharpshooter Guild", th: "Sharpshooter Guild" },
+    ],
+    gears: [
+      {
+        name: { en: "Paralysis Darts", th: "ดาร์ทพิษอัมพาต" },
+        building: { en: "Metal Shop", th: "Metal Shop" },
+        type: "Offensive",
+        effect: {
+          en: "The Metal Shop coats the Bandit ammunition with a quick-acting muscle-paralyzing poison. Causes intense spasms that render an enemy completely helpless. The Bandit can carry only 6 such darts at a time.",
+          th: "Metal Shop เคลือบดาร์ทด้วยยาพิษทำอัมพาตกล้ามเนื้ออย่างรวดเร็ว ทำให้ศัตรูเคลื่อนไหวไม่ได้ Bandit พกได้เพียง 6 ดาร์ทเท่านั้น",
+        },
+        duration: { en: "6 darts max — instant paralysis on hit", th: "สูงสุด 6 ดาร์ท — อัมพาตทันทีเมื่อโดน" },
+      },
+      {
+        name: { en: "Stealth", th: "กบดานล่องหน" },
+        building: { en: "Thieves Guild", th: "Thieves Guild" },
+        type: "Toggle",
+        effect: {
+          en: "Moving stealthily drains the Bandit stamina continuously, making him nearly invisible while moving. Stealth breaks the instant he attacks or engages combat.",
+          th: "การเดินกบดานดูดสตามิน่าต่อเนื่อง ทำให้ Bandit แทบมองไม่เห็นขณะเคลื่อนที่ ล่องหนสิ้นสุดทันทีที่โจมตีหรือเข้าสู่การสู้รบ",
+        },
+        duration: { en: "Drains stamina — breaks on attack", th: "กินสตามิน่าต่อเนื่อง — สิ้นสุดเมื่อโจมตี" },
+      },
+    ],
+    description: {
+      en: "Veteran survivors who fight dirty and never take prisoners. Masters of guerrilla warfare — can turn invisible to assassinate key targets or disrupt enemy flanks with paralysis darts.",
+      th: "ทหารผ่านศึกที่รอดมาได้ด้วยการสู้แบบสกปรก ผู้เชี่ยวชาญสงครามกองโจรที่ล่องหนเพื่อลอบสังหารเป้าหมายสำคัญหรือก่อกวนปีกข้าศึกด้วยดาร์ทพิษ",
+    },
+  },
+  {
+    id: "serpent_cannoneer",
+    name: { en: "Cannoneer", th: "พลปืนใหญ่ (Cannoneer)" },
+    tier: "Tier 2 Heavy Ranged / Siege",
+    role: { en: "Long-Range Heavy Artillery", th: "ปืนใหญ่ถล่มระยะไกล" },
+    clan: "Serpent",
+    dmgType: "Explosive",
+    armorType: "Heavy",
+    trainingPath: [
+      { en: "Sharpshooter Guild", th: "Sharpshooter Guild" },
+      { en: "Alchemist Hut", th: "Alchemist Hut" },
+    ],
+    gears: [
+      {
+        name: { en: "Chain Shot", th: "ลูกกระสุนโซ่ตัด" },
+        building: { en: "Metal Shop", th: "Metal Shop" },
+        type: "Offensive",
+        effect: {
+          en: "Loads a chain-linked shot that rips through multiple enemies in a line, dealing devastating cutting damage to all units caught in its path.",
+          th: "บรรจุกระสุนโซ่เชื่อมที่ฉีกผ่านหลายศัตรูในแนวเดียวกัน สร้างความเสียหาย Cutting ที่รุนแรงต่อทุกยูนิตในเส้นทาง",
+        },
+        duration: { en: "Instant — pierces multiple units in a line", th: "ทันที — ผ่านทะลุยูนิตหลายตัวในแนวเดียว" },
+      },
+    ],
+    description: {
+      en: "Respected and feared unlike the arrogant Musketeer, the Cannoneer hauls tremendous solid-iron cannons across the battlefield. Heavy iron shot rips through enemy ranks and topples fortifications.",
+      th: "ได้รับความยำเกรงต่างจาก Musketeer ผู้หยิ่งทะนง Cannoneer ลากปืนใหญ่เหล็กมหึมาข้ามสนามรบ กระสุนเหล็กฉีกทะลุแนวทหารและพังป้อมปราการอย่างโหดร้าย",
+    },
+  },
+  {
+    id: "serpent_slasher",
+    name: { en: "Slasher", th: "สแลชเชอร์ (Slasher)" },
+    tier: "Tier 2 Melee / Cavalry",
+    role: { en: "Fast Mounted Raider", th: "นักรบขี่ม้าจู่โจมเร็ว" },
+    clan: "Serpent",
+    dmgType: "Cutting",
+    armorType: "Medium",
+    trainingPath: [
+      { en: "Tavern", th: "Tavern" },
+      { en: "Alchemist Hut", th: "Alchemist Hut" },
+    ],
+    gears: [
+      {
+        name: { en: "Garotte", th: "สายรัดคอสังหาร" },
+        building: { en: "Thieves Guild", th: "Thieves Guild" },
+        type: "Offensive",
+        effect: {
+          en: "The Slasher uses a garrote wire to silently strangle an isolated target unit, dealing massive Cutting damage to separated or lone enemies.",
+          th: "Slasher ใช้ลวดรัดคอสังหารเป้าหมายที่แยกตัวอย่างเงียบ สร้างความเสียหาย Cutting มหาศาลกับศัตรูที่อยู่คนเดียวหรือแยกตัวออกมา",
+        },
+        duration: { en: "Instant single-target high damage", th: "ดาเมจสูงใส่เป้าหมายเดี่ยวทันที" },
+      },
+    ],
+    description: {
+      en: "The Serpent Clan mounted raider. Slashers use horse speed to strike-and-retreat, harassing enemy formations and picking off isolated units with their garrote.",
+      th: "นักรบขี่ม้าบุกโจมตีของเผ่างู ใช้ความเร็วม้าโจมตีแล้วถอย รบกวนแนวทหารศัตรูและเก็บยูนิตที่แยกตัวด้วยลวดรัดคอ",
+    },
+  },
+  {
+    id: "serpent_fan_geisha",
+    name: { en: "Fan Geisha", th: "พัดเกอิชา (Fan Geisha)" },
+    tier: "Support Healer",
+    role: { en: "Combat Medic & Yin Sustainer", th: "หมอรักษาพยาบาล & สะสม Yin" },
+    clan: "Serpent",
+    dmgType: "Magic",
+    armorType: "Unarmored",
+    trainingPath: [{ en: "Bathhouse", th: "Bathhouse" }],
+    gears: [
+      {
+        name: { en: "Seduction", th: "เสน่ห์ล่อศัตรู" },
+        building: { en: "Thieves Guild", th: "Thieves Guild" },
+        type: "Utility",
+        effect: {
+          en: "Uses irresistible charm to bewitch enemy soldiers, temporarily causing them to ignore orders and stop attacking while under the Fan Geisha influence.",
+          th: "ใช้เสน่ห์ที่ต้านทานไม่ได้ล่อใจทหารศัตรู ทำให้พวกเขาเพิกเฉยต่อคำสั่งชั่วคราวและหยุดโจมตีขณะอยู่ภายใต้อิทธิพลของ Fan Geisha",
+        },
+        duration: { en: "Stuns/distracts nearby enemies for several seconds", th: "หยุดหรือรบกวนศัตรูรอบข้างหลายวินาที" },
+      },
+    ],
+    description: {
+      en: "Resilient support units who tend to the Serpent army day after day. Their fans restore health to nearby allies and generate Yin points during combat.",
+      th: "ยูนิตสนับสนุนที่ทนทานซึ่งดูแลกองทัพเผ่างูทุกวัน พัดของพวกเขาฟื้นฟูพลังชีวิตให้พันธมิตรรอบข้างและสร้าง Yin Point ระหว่างการต่อสู้",
+    },
+  },
+  {
+    id: "serpent_enforcer",
+    name: { en: "Enforcer", th: "บังคับการ (Enforcer)" },
+    tier: "Tier 3 Heavy Melee",
+    role: { en: "Slow Juggernaut & Disabler", th: "ทหารหนักสายสตั้นดิสเอเบิล" },
+    clan: "Serpent",
+    dmgType: "Blunt",
+    armorType: "Heavy",
+    trainingPath: [
+      { en: "Tavern", th: "Tavern" },
+      { en: "Sharpshooter Guild", th: "Sharpshooter Guild" },
+      { en: "Alchemist Hut", th: "Alchemist Hut" },
+    ],
+    gears: [
+      {
+        name: { en: "Hobnailed Boots", th: "รองเท้าตะปูเหล็ก" },
+        building: { en: "Metal Shop", th: "Metal Shop" },
+        type: "Passive",
+        effect: {
+          en: "The Metal Shop attaches wicked steel nails to the Enforcer boots, dramatically improving his movement speed — removing his primary weakness.",
+          th: "Metal Shop ติดตะปูเหล็กแหลมบนรองเท้าของ Enforcer เพิ่มความเร็วในการเคลื่อนที่อย่างมาก — ขจัดจุดอ่อนหลักของเขา",
+        },
+        duration: { en: "Permanent passive movement speed bonus", th: "โบนัสความเร็วการเคลื่อนที่ถาวร" },
+      },
+      {
+        name: { en: "Low Blow", th: "หมัดใต้เข็มขัด" },
+        building: { en: "Thieves Guild", th: "Thieves Guild" },
+        type: "Offensive",
+        effect: {
+          en: "A dishonorable sucker punch to the gut — the epitome of the Enforcer fighting style. Drains stamina considerably but knocks the wind out of the victim, leaving them dazed, slowed, and slow to recover.",
+          th: "หมัดชกท้องไร้เกียรติ — สุดยอดสไตล์ของ Enforcer กินสตามิน่ามาก แต่ทำให้เหยื่อหอบ เซ ช้า และฟื้นตัวได้ยาก",
+        },
+        duration: { en: "Costs 60% stamina — stuns and slows target", th: "กินสตามิน่า 60% — สตั้นและสโลว์เป้าหมาย" },
+      },
+    ],
+    description: {
+      en: "A hulking bruiser who fights with dishonor and brute force. Slow without Hobnailed Boots, but once equipped becomes a terrifying engine of destruction. Low Blow can disable even elite units.",
+      th: "ยักษ์ใหญ่ที่ต่อสู้ด้วยความไร้เกียรติและกำลัง ช้าโดยธรรมชาติแต่เมื่อติดตั้ง Hobnailed Boots กลายเป็นเครื่องทำลายล้างที่น่าสะพรึง Low Blow ปิดการใช้งานได้แม้แต่ยูนิตชั้นยอด",
+    },
+  },
+  {
+    id: "serpent_witch",
+    name: { en: "Witch", th: "แม่มด (Witch)" },
+    tier: "Tier 2 Hybrid Caster",
+    role: { en: "Shape-Shifting Support & Tower Drain", th: "นักมนตราแปลงร่าง & ดูดพลังหอคอย" },
+    clan: "Serpent",
+    dmgType: "Magic",
+    armorType: "Unarmored",
+    trainingPath: [
+      { en: "Tavern", th: "Tavern" },
+      { en: "Alchemist Hut", th: "Alchemist Hut" },
+    ],
+    gears: [
+      {
+        name: { en: "Demon's Amulet", th: "ดวงแก้วมารสาป" },
+        building: { en: "Metal Shop", th: "Metal Shop" },
+        type: "Toggle",
+        effect: {
+          en: "The Metal Shop provides a possessed amulet cursed by an unknown demon. Activated, it transforms the Witch into a powerful Demoness. Stamina drains continuously; when exhausted she reverts to human form, shattering the amulet.",
+          th: "Metal Shop จัดหาดวงแก้วที่สิงสถิตโดยมารที่ไม่รู้จัก เปิดใช้งานแปลงร่าง Witch เป็น Demoness ทรงพลัง สตามิน่าดูดต่อเนื่อง เมื่อหมดจะกลับสู่ร่างมนุษย์และดวงแก้วแตก",
+        },
+        duration: { en: "Drains stamina — amulet shatters when stamina exhausted", th: "กินสตามิน่าต่อเนื่อง — ดวงแก้วแตกเมื่อสตามิน่าหมด" },
+      },
+      {
+        name: { en: "Gathering Mists", th: "หมอกรวมพลัง" },
+        building: { en: "Thieves Guild", th: "Thieves Guild" },
+        type: "Toggle",
+        effect: {
+          en: "Stolen tomes from the Thieves Guild teach the Witch to harness energy from enemy Watchtowers, converting it to blood essence that heals nearby allies and herself — but she must remain stationary, draining stamina.",
+          th: "คัมภีร์ที่ขโมยจาก Thieves Guild สอน Witch ให้ดูดพลังจากหอยามศัตรู แปลงเป็นแก่นเลือดรักษาพันธมิตรและตนเองใกล้ๆ — แต่ต้องยืนนิ่งและกินสตามิน่าต่อเนื่อง",
+        },
+        duration: { en: "Drains stamina — must remain stationary", th: "กินสตามิน่า — ต้องยืนนิ่ง" },
+      },
+    ],
+    description: {
+      en: "A versatile caster who can transform into a fearsome Demoness or drain enemy watchtower energy to heal allies. Her dual form makes her a wild card in both offense and support.",
+      th: "นักมนตราอเนกประสงค์ที่แปลงร่างเป็น Demoness น่ากลัวหรือดูดพลังหอยามศัตรูเพื่อรักษาพันธมิตร ความสามารถสองด้านทำให้เป็น Wild Card ทั้งฝ่ายโจมตีและสนับสนุน",
     },
   },
   {
     id: "serpent_ronin",
     name: { en: "Ronin", th: "โรนิน (Ronin)" },
-    tier: "Tier 3 Melee",
-    role: { en: "Dual-Katana Duelist", th: "จอมดาบคู่สังหาร" },
+    tier: "Tier 3 Elite Melee",
+    role: { en: "Dual-Katana Duelist & Self-Sustainer", th: "จอมดาบคู่สังหาร & ฟื้นเลือดตัวเอง" },
     clan: "Serpent",
     dmgType: "Cutting",
     armorType: "Heavy",
@@ -1262,27 +1514,165 @@ export const ALL_UNITS_DATA: UnitData[] = [
     ],
     gears: [
       {
-        name: { en: "Yin Blade", th: "ดาบมารหยิน (ดูดเลือด)" },
+        name: { en: "Yin Blade", th: "ดาบมารหยิน" },
         building: { en: "Alchemist Hut", th: "Alchemist Hut" },
-        type: "Offensive",
+        type: "Toggle",
         effect: {
-          en: "Empowers attacks with life-drain, restoring HP with every successful strike.",
-          th: "เปลี่ยนการฟันเป็นการดูดเลือด ฟื้นฟู HP ทุกครั้งที่โจมตี",
+          en: "Imbues the Ronin blades with dark Yin energy, converting each strike into life-drain — every hit restores HP to the Ronin, enabling sustained combat without dedicated healers.",
+          th: "ผสานพลัง Yin มืดเข้าดาบของ Ronin เปลี่ยนทุกการโจมตีเป็นการดูดพลังชีวิต — ทุกการฟันฟื้นฟู HP ทำให้สู้ได้ต่อเนื่องโดยไม่ต้องพึ่งตัวฮีล",
         },
+        duration: { en: "Drains stamina — life steal on every hit", th: "กินสตามิน่า — ดูดเลือดทุกครั้งที่โจมตี" },
       },
       {
         name: { en: "Blood Bond", th: "พันธนาการโลหิต" },
         building: { en: "Necromancer Throne", th: "Necromancer Throne" },
         type: "Utility",
         effect: {
-          en: "Transfers damage taken to nearby friendly peasants instead.",
-          th: "ถ่ายโอนความเสียหายที่ได้รับไปให้ชาวบ้านรอบข้างแทน",
+          en: "Creates a dark magical contract that transfers all damage taken by the Ronin to nearby friendly peasants instead, making him practically invulnerable while peasants are present.",
+          th: "สร้างสัญญามนตราดำที่ถ่ายโอนความเสียหายทั้งหมดที่ Ronin รับไปยังชาวบ้านพันธมิตรรอบข้างแทน ทำให้เขาแทบอยู่ยงคงกระพันขณะที่มีชาวบ้าน",
         },
+        duration: { en: "Stamina cost — transfers incoming damage to nearby peasants", th: "กินสตามิน่า — ถ่ายโอนดาเมจที่รับไปยังชาวบ้านรอบข้าง" },
       },
     ],
     description: {
-      en: "Brutal dual-blade master. Yin Blade allows them to sustain long fights without needing dedicated healers.",
-      th: "นักดาบคู่สุดโหด ดาบ Yin Blade ทำให้ยืนฟันแลกและรีเลือดตัวเองได้โดยไม่ต้องพึ่งพาตัวฮีล",
+      en: "The pinnacle of Serpent melee combat. Ronin wield dual katana with lethal precision — Yin Blade makes them self-sustaining in prolonged fights, while Blood Bond makes them near-invulnerable at the cost of nearby peasants.",
+      th: "ยอดสุดของการต่อสู้ระยะประชิดของเผ่างู Ronin ใช้ดาบคู่ด้วยความแม่นยำอันร้ายกาจ — Yin Blade ทำให้พึ่งตนเองในการต่อสู้ยืดเยื้อ ในขณะที่ Blood Bond ทำให้แทบอยู่ยงคงกระพัน",
+    },
+  },
+
+  // ==================== SERPENT HEROES / ZEN MASTERS ====================
+  {
+    id: "zen_shinja",
+    name: { en: "Shinja", th: "ชินจา (Shinja)" },
+    tier: "Zen Master / Hero",
+    role: { en: "Ruthless Warlord & Intimidator", th: "ขุนศึกผู้โหดเหี้ยม & ขู่ขวัญศัตรู" },
+    clan: "Serpent",
+    dmgType: "Cutting",
+    armorType: "Heavy",
+    trainingPath: [{ en: "Keep / Necromancer Throne", th: "ป้อมหลัก / Necromancer Throne" }],
+    gears: [
+      {
+        name: { en: "Intimidation", th: "ขู่ขวัญศัตรู" },
+        type: "Offensive",
+        effect: {
+          en: "Shinja fearsome reputation precedes him in battle, weakening the strongest warrior blows. Anyone who strikes him knows he will repay it a hundredfold — nearby enemies suffer significantly reduced attack power.",
+          th: "ชื่อเสียงอันน่าเกรงขามของ Shinja นำหน้าเขาในสนามรบ ทำให้การโจมตีของนักรบที่แข็งแกร่งที่สุดอ่อนแรงลง ศัตรูรอบข้างได้รับพลังโจมตีลดลงอย่างมาก",
+        },
+        duration: { en: "Costs 40% stamina — reduces nearby enemy attack power", th: "กินสตามิน่า 40% — ลดพลังโจมตีศัตรูรอบข้าง" },
+      },
+    ],
+    description: {
+      en: "Ruthless and warmongering warlord who rules the Serpent Clan with an iron grip. His twin poisonous blades add slow poison effects to all attacks. He is a realist — and magic attacks do him no harm.",
+      th: "ขุนศึกผู้โหดเหี้ยมและชอบสงครามที่ปกครองเผ่างูด้วยกำปั้นเหล็ก ดาบพิษคู่เพิ่มเอฟเฟกต์พิษช้าๆ ให้การโจมตีทั้งหมด เขาเป็นนักสัจนิยม — และเวทมนตร์ไม่สามารถทำร้ายเขาได้",
+    },
+  },
+  {
+    id: "zen_vetkin",
+    name: { en: "Vetkin", th: "เวทกิน (Vetkin)" },
+    tier: "Zen Master",
+    role: { en: "Charismatic Sai Master & Debuffer", th: "จ้าวดาบไสซ่า & ดูดพลังศัตรู" },
+    clan: "Serpent",
+    dmgType: "Piercing",
+    armorType: "Medium",
+    trainingPath: [{ en: "Keep / Necromancer Throne", th: "ป้อมหลัก / Necromancer Throne" }],
+    gears: [
+      {
+        name: { en: "Bravado", th: "ความกล้าอวดดี" },
+        type: "Offensive",
+        effect: {
+          en: "Vetkin charisma makes him seem like a hero from the old tales. His dashing displays sap energy right out of foes — enemies hit by Bravado take 50% more damage afterward.",
+          th: "เสน่ห์ของ Vetkin ทำให้เหมือนวีรบุรุษในนิทาน การแสดงความกล้าดูดพลังงานออกจากศัตรู — ศัตรูที่โดน Bravado รับดาเมจเพิ่ม 50%",
+        },
+        duration: { en: "Costs 50% stamina — enemies take 50% more damage", th: "กินสตามิน่า 50% — ศัตรูรับดาเมจเพิ่ม 50%" },
+      },
+    ],
+    description: {
+      en: "A young, handsome sai master. Tireless — can travel the whole map without spending stamina. Bravado makes enemies take 50% more damage. Can run faster than a horse can gallop.",
+      th: "หนุ่มหล่อจ้าวดาบไสซ่า ไม่รู้จักเหนื่อย สามารถเดินทางทั้งแผนที่โดยไม่ใช้สตามิน่า Bravado ทำให้ศัตรูรับดาเมจเพิ่ม 50% และวิ่งเร็วกว่าม้าได้",
+    },
+  },
+  {
+    id: "zen_budo",
+    name: { en: "Budo", th: "บูโด (Budo)" },
+    tier: "Zen Master",
+    role: { en: "Slavedriver & Frontline Tank", th: "จอมโบยทาส & แทงก์แถวหน้า" },
+    clan: "Serpent",
+    dmgType: "Blunt",
+    armorType: "Heavy",
+    trainingPath: [{ en: "Keep / Necromancer Throne", th: "ป้อมหลัก / Necromancer Throne" }],
+    gears: [
+      {
+        name: { en: "Slave Driver", th: "โบยทาสเร่งงาน" },
+        type: "Utility",
+        effect: {
+          en: "At this point in his career, Budo does not need to beat people to death quite so often — a mere crack of his whip sends nearby Serpent peasants scurrying into faster action (though it drains their health).",
+          th: "ในจุดนี้ของอาชีพเขา Budo ไม่ต้องตีคนจนตายบ่อยนัก — การสะบัดแส้เพียงครั้งเดียวส่ง Peasant รอบข้างให้ทำงานเร็วขึ้นอย่างมาก (แต่สูบพลังชีวิตพวกเขา)",
+        },
+        duration: { en: "Costs 30% stamina — nearby peasants work faster but lose HP", th: "กินสตามิน่า 30% — Peasant รอบข้างทำงานเร็วขึ้นแต่เสีย HP" },
+      },
+    ],
+    description: {
+      en: "Fat and none too handsome, this lumbering slavedriver has the highest endurance of all Zen Masters. His fast whip attack combined with immense health makes him a terrifying frontline presence.",
+      th: "อ้วนและไม่งามตา จอมโบยทาสผู้นี้มีความอึดสูงสุดในบรรดา Zen Master ทั้งหมด การโจมตีด้วยแส้และพลังชีวิตมหาศาลทำให้เขาน่าสะพรึงในแถวหน้า",
+    },
+  },
+  {
+    id: "zen_utara",
+    name: { en: "Utara", th: "อุตารา (Utara)" },
+    tier: "Zen Master",
+    role: { en: "Vengeance Singer & Poison Caster", th: "นักร้องแห่งแค้น & ผู้หว่านพิษ" },
+    clan: "Serpent",
+    dmgType: "Magic",
+    armorType: "Light",
+    trainingPath: [{ en: "Keep / Necromancer Throne", th: "ป้อมหลัก / Necromancer Throne" }],
+    gears: [
+      {
+        name: { en: "Song of Sorrow", th: "เพลงคร่ำครวญแห่งโศกา" },
+        type: "Offensive",
+        effect: {
+          en: "Utara sings a strange, keening song borne of her tragic past and thirst for revenge. None can hear it without risking their life — deals AoE Magic damage and can kill or seriously wound all nearby enemies.",
+          th: "Utara ร้องเพลงครวญครางแปลกๆ ที่เกิดจากอดีตอันน่าเศร้าและความกระหายการแก้แค้น ไม่มีใครได้ยินโดยไม่เสี่ยงชีวิต — สร้างดาเมจ Magic วงกว้างและสามารถฆ่าหรือทำบาดเจ็บสาหัสศัตรูรอบข้าง",
+        },
+        duration: { en: "Costs 40% stamina — AoE Magic damage to all nearby enemies", th: "กินสตามิน่า 40% — ดาเมจ Magic วงกว้างต่อศัตรูรอบข้างทั้งหมด" },
+      },
+    ],
+    description: {
+      en: "After killing the bandits who murdered her parents, she returned from self-exile as the strangest weapon in the Serpent arsenal. Her songs drain enemy strength and deal deadly magic damage. She stuns all units when she herself takes harm.",
+      th: "หลังจากฆ่าโจรที่สังหารพ่อแม่ กลับจากการเนรเทศตัวเองในฐานะอาวุธที่แปลกประหลาดที่สุดของเผ่างู เพลงของเธอสูบพลังศัตรูและสร้างดาเมจมนตราอันร้ายกาจ และสตั้นทุกยูนิตรอบข้างเมื่อตัวเองได้รับบาดเจ็บ",
+    },
+  },
+  {
+    id: "zen_necromancer",
+    name: { en: "The Necromancer", th: "จอมมาร (The Necromancer)" },
+    tier: "Zen Master",
+    role: { en: "Undead Summoner & Spirit Commander", th: "ผู้เรียกซอมบี้ & ผู้บัญชาการวิญญาณ" },
+    clan: "Serpent",
+    dmgType: "Magic",
+    armorType: "Medium",
+    trainingPath: [{ en: "Necromancer Throne", th: "บัลลังก์จอมมาร (Necromancer Throne)" }],
+    gears: [
+      {
+        name: { en: "Spirit Warriors", th: "เรียกนักรบวิญญาณ" },
+        type: "Utility",
+        effect: {
+          en: "The Necromancer summons spirit warriors from the realm of the dead to do his bidding — spectral soldiers who fight for the Serpent Clan without costing any resources.",
+          th: "จอมมารเรียกนักรบวิญญาณจากอาณาจักรคนตายมาทำตามคำสั่ง — ทหารผีที่สู้เพื่อเผ่างูโดยไม่เสียทรัพยากรใดๆ",
+        },
+        duration: { en: "Summons spirit soldiers — persist until destroyed", th: "เรียกทหารผี — อยู่จนกว่าจะถูกทำลาย" },
+      },
+      {
+        name: { en: "Raise Dead", th: "ชุบชีวิตศพ" },
+        type: "Utility",
+        effect: {
+          en: "Summons the fallen corpses of enemies to rise as undead soldiers, turning the tide of battle by reanimating enemy casualties to fight for the Serpent Clan.",
+          th: "เรียกศพศัตรูที่ล้มลงให้ลุกขึ้นมาเป็นทหารซอมบี้ พลิกสถานการณ์การสู้รบด้วยการชุบชีวิตผู้เสียชีวิตของศัตรูให้มาสู้เพื่อเผ่างู",
+        },
+        duration: { en: "Raises fallen enemy corpses as undead allies", th: "ชุบชีวิตศพศัตรูที่ล้มเป็นพันธมิตรซอมบี้" },
+      },
+    ],
+    description: {
+      en: "An ancient undead sorcerer older than almost all living beings. He summons spirit warriors and raises enemy corpses as undead soldiers, building an unstoppable army from nothing but death.",
+      th: "นักมนตราซอมบี้โบราณที่เก่าแก่กว่าสิ่งมีชีวิตเกือบทุกชนิด เรียกนักรบวิญญาณและชุบชีวิตศพศัตรูเป็นทหารซอมบี้ สร้างกองทัพที่หยุดไม่ได้จากความตายล้วนๆ",
     },
   },
 

@@ -55,11 +55,34 @@ const UNIT_OVERRIDES: Record<string, string> = {
   wolf_wildeye:       "wolf_wildeye.png",
   wolf_gaihla:        "wolf_gaihla.gif",
   wolf_dryad:         "wolf_dryad.png",
+
+  // Serpent Clan — local PNG icons from wiki
+  serpent_peasant:      "serpent_peasant.png",
+  serpent_swordsman:    "serpent_swordsman.png",
+  serpent_crossbowman:  "serpent_crossbowman.png",
+  serpent_musketeer:    "serpent_musketeer.png",
+  serpent_raider:       "serpent_raider.png",
+  serpent_bandit:       "serpent_bandit.png",
+  serpent_cannoneer:    "serpent_cannoneer.png",
+  serpent_slasher:      "serpent_slasher.png",
+  serpent_fan_geisha:   "serpent_fan_geisha.png",
+  serpent_enforcer:     "serpent_enforcer.png",
+  serpent_witch:        "serpent_witch.png",
+  serpent_ronin:        "serpent_ronin.png",
+  zen_shinja:           "zen_shinja.png",
+  zen_vetkin:           "zen_vetkin.png",
+  zen_budo:             "zen_budo.png",
+  zen_utara:            "zen_utara.png",
+  zen_necromancer:      "zen_necromancer.png",
 };
 
 export function getUnitImagePath(unitId: string): string {
   const override = UNIT_OVERRIDES[unitId];
-  if (override) return `/assets/units/${override}`;
+  if (override) {
+    // Support both external URLs (wiki) and local asset filenames
+    if (override.startsWith("http")) return override;
+    return `/assets/units/${override}`;
+  }
   return `/assets/units/${unitId}.png`;
 }
 
@@ -75,10 +98,18 @@ const BUILDING_OVERRIDES: Record<string, string> = {
   // Serpent
   "Tavern": "tavern",
   "Thieves Guild": "thieves_guild",
+  "Thieves' Guild": "thieves_guild",
   "Sharpshooter Guild": "sharpshooter_guild",
+  "Sharpshooter's Guild": "sharpshooter_guild",
   "Alchemist Hut": "alchemist_hut",
+  "Alchemist's Hut": "alchemist_hut",
   "Metalworks": "metalworks",
+  "Metal Shop": "metalworks",
   "Necromancer Throne": "necromancer_throne",
+  "Necromancer's Throne": "necromancer_throne",
+  "Peasant Hut": "peasant_hut",
+  "Keep / Necromancer Throne": "necromancer_throne",
+  "Keep / Necromancer's Throne": "necromancer_throne",
   // Lotus
   "Blade Garden": "blade_garden",
   "Training Yard": "training_yard",
@@ -165,11 +196,32 @@ const GEAR_OVERRIDES: Record<string, string> = {
   "Whirling Dervish": "whirling_dervish.png",
   "Death Siphon": "death_siphon.png",
   "Soul Chill": "soul_chill.png",
+
+  // Serpent Clan — new gears
+  "Blast Shot": "blast_shot.png",
+  "Sniper Scope": "sniper_scope.png",
+  "Paralysis Darts": "paralysis_darts.png",
+  "Stealth": "stealth.png",
+  "Chain Shot": "chain_shot.png",
+  "Garotte": "garotte.png",
+  "Seduction": "seduction.png",
+  "Hobnailed Boots": "hobnailed_boots.png",
+  "Low Blow": "low_blow.png",
+  "Demon's Amulet": "demons_amulet.png",
+  "Gathering Mists": "gathering_mists.png",
+  "Intimidation": "intimidation.png",
+  "Bravado": "bravado.png",
+  "Slave Driver": "slave_driver.png",
+  "Song of Sorrow": "song_of_sorrow.png",
+  "Spirit Warriors": "spirit_warriors.png",
+  "Raise Dead": "raise_dead.png",
 };
 
 export function getGearImagePath(gearNameEn: string): string {
   const file = GEAR_OVERRIDES[gearNameEn];
   if (file) {
+    // Support both external URLs and local asset filenames
+    if (file.startsWith("http")) return file;
     return `/assets/gears/${file}`;
   }
   const slug = toSlug(gearNameEn);
@@ -185,7 +237,10 @@ export const ALL_UNIT_IDS = [
   "dragon_samurai", "dragon_geisha", "dragon_guardian", "dragon_battle_maiden",
   "zen_kenji", "zen_otomo", "zen_kazan", "zen_arah", "zen_tao", "zen_teppo", "zen_garrin",
   // Serpent
-  "serpent_swordsman", "serpent_crossbowman", "serpent_raider", "serpent_ronin",
+  "serpent_peasant", "serpent_swordsman", "serpent_crossbowman", "serpent_musketeer",
+  "serpent_bandit", "serpent_raider", "serpent_cannoneer", "serpent_slasher",
+  "serpent_fan_geisha", "serpent_enforcer", "serpent_witch", "serpent_ronin",
+  "zen_shinja", "zen_vetkin", "zen_budo", "zen_utara", "zen_necromancer",
   // Lotus
   "lotus_blade_acolyte", "lotus_staff_adept", "lotus_unclean_one", "lotus_warlock",
   // Wolf
